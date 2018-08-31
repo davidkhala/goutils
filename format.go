@@ -38,7 +38,7 @@ func Deferred(handler DeferHandler) {
 	var errString = err.(error).Error()
 	var toThrow = handler(errString)
 	if toThrow {
-		panic(errors.New(errString))
+		panic(new)
 	}
 }
 func PanicString(err string) {
