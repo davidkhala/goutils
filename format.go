@@ -7,8 +7,6 @@ import (
 	"time"
 )
 
-
-
 func Atoi(str string) int {
 	i, err := strconv.Atoi(str)
 	PanicError(err)
@@ -26,6 +24,20 @@ func ToString(integer int64) string {
 
 func PanicError(err error) {
 	if err != nil {
+		panic(err)
+	}
+}
+
+type DeferHandler func(string) (throw bool)
+
+func Deferred(handler DeferHandler) {
+	err := recover()
+	if err == nil {
+		return
+	}
+	var errString = err.(error).Error()
+	var toThrow = handler(errString)
+	if toThrow {
 		panic(err)
 	}
 }
