@@ -28,7 +28,7 @@ func PanicError(err error) {
 	}
 }
 
-type DeferHandler func(string) (throw bool)
+type DeferHandler func(errString string) (toThrow bool)
 
 func Deferred(handler DeferHandler) {
 	err := recover()
