@@ -1,4 +1,4 @@
 # goutils
 golang utils, it covers
- - docker utils
+ - go command utils
  - format utils
