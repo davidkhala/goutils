@@ -13,6 +13,11 @@ func Atoi(str string) int {
 	PanicError(err)
 	return i
 }
+func ParseFloat(str string, bitSize int) float64 {
+	var result, err = strconv.ParseFloat(str, bitSize)
+	PanicError(err)
+	return result
+}
 func ToInt(bytes []byte) int {
 	if bytes == nil {
 		return 0
