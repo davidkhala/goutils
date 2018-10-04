@@ -13,8 +13,8 @@ func Atoi(str string) int {
 	PanicError(err)
 	return i
 }
-func ParseFloat(str string, bitSize int) float64 {
-	var result, err = strconv.ParseFloat(str, bitSize)
+func ParseFloat(str string) float64 {
+	var result, err = strconv.ParseFloat(str, 64)
 	PanicError(err)
 	return result
 }
@@ -24,7 +24,10 @@ func ToInt(bytes []byte) int {
 	}
 	return Atoi(string(bytes))
 }
-func ToString(integer int64) string {
+func FormatFloat(f float64, precision int) string {
+	return strconv.FormatFloat(f, 'f', precision, 64)
+}
+func FormatInt(integer int64) string {
 	return strconv.FormatInt(integer, 10)
 }
 
