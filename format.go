@@ -45,7 +45,7 @@ func Deferred(handler DeferHandler, params ...interface{}) {
 		return
 	}
 	var errString = err.(error).Error()
-	var success = handler(errString, params)
+	var success = handler(errString, params...)
 	if ! success {
 		panic(err)
 	}
