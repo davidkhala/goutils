@@ -37,15 +37,15 @@ func PanicError(err error) {
 	}
 }
 
-type DeferHandler func(errString string) (success bool)
+type DeferHandler func(errString string, params ...interface{}) (success bool)
 
-func Deferred(handler DeferHandler) {
+func Deferred(handler DeferHandler, params ...interface{}) {
 	err := recover()
 	if err == nil {
 		return
 	}
 	var errString = err.(error).Error()
-	var success = handler(errString)
+	var success = handler(errString, params)
 	if ! success {
 		panic(err)
 	}
