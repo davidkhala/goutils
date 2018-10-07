@@ -52,7 +52,7 @@ func TestECDSAPriv_LoadPKCS8Pem(t *testing.T) {
 	var rawObj = pkcs8Obj.FormatECDSA()
 	var dsaObj = ECDSAPriv{rawObj}
 
-	var dsapubObj = ECDSAPub{}.LoadPem([]byte(testPubPem))
+	var dsapubObj = ECDSAPub{}.LoadCert([]byte(testPubPem))
 	var digest = []byte("anytest")
 	var signature = dsaObj.Sign(digest)
 	var isRight = dsapubObj.Verify(digest, signature)

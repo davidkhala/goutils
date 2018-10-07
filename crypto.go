@@ -74,7 +74,7 @@ func (t ECDSAPub) Verify(digest []byte, signature []byte) bool {
 	var ecdsaSignature = ECDSASignature{}.Unmarshal(signature)
 	return ecdsa.Verify(t.PublicKey, digest, ecdsaSignature.R, ecdsaSignature.S)
 }
-func (ECDSAPub) LoadPem(pemBytes []byte) ECDSAPub {
+func (ECDSAPub) LoadCert(pemBytes []byte) ECDSAPub {
 	block, rest := pem.Decode(pemBytes)
 	if rest != nil && len(rest) > 0 {
 		PanicString("pem decode failed:" + string(rest))
