@@ -41,18 +41,13 @@ func (t ECDSASignature) Marshal() []byte {
 }
 func (ECDSASignature) Unmarshal(signature []byte) (ecdsaSignature ECDSASignature) {
 	var rest, err = asn1.Unmarshal(signature, &ecdsaSignature)
-	if rest != nil && len(rest) > 0 {
-		PanicString("asn1 unmarshal failed:" + string(rest))
-	}
+	AssertEmpty(rest, "asn1 unmarshal failed:"+string(rest))
 	PanicError(err)
 	return
 }
 func (ECDSAPriv) LoadPem(pemBytes []byte) (ECDSAPriv) {
 	block, rest := pem.Decode(pemBytes)
-	if rest != nil && len(rest) > 0 {
-		PanicString("pem decode failed:" + string(rest))
-	}
-
+	AssertEmpty(rest, "pem decode failed:"+string(rest))
 	privKey, err := x509.ParseECPrivateKey(block.Bytes)
 	PanicError(err)
 	return ECDSAPriv{privKey}
@@ -76,9 +71,7 @@ func (t ECDSAPub) Verify(digest []byte, signature []byte) bool {
 }
 func (ECDSAPub) LoadCert(pemBytes []byte) ECDSAPub {
 	block, rest := pem.Decode(pemBytes)
-	if rest != nil && len(rest) > 0 {
-		PanicString("pem decode failed:" + string(rest))
-	}
+	AssertEmpty(rest, "pem decode failed:"+string(rest))
 	var cert, err = x509.ParseCertificate(block.Bytes)
 	PanicError(err)
 
@@ -95,10 +88,7 @@ type PKCS8 struct {
 
 func (PKCS8) LoadPem(pemBytes []byte) (PKCS8) {
 	block, rest := pem.Decode(pemBytes)
-	if rest != nil && len(rest) > 0 {
-		PanicString("pem decode failed:" + string(rest))
-	}
-
+	AssertEmpty(rest, "pem decode failed:"+string(rest))
 	privKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)
 	PanicError(err)
 	return PKCS8{*block, privKey, reflect.TypeOf(privKey)}

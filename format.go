@@ -55,6 +55,11 @@ func PanicString(err string) {
 		panic(errors.New(err))
 	}
 }
+func AssertEmpty(rest []byte, message string) {
+	if rest != nil && len(rest) > 0 {
+		PanicString(message)
+	}
+}
 func UnixMilliSecond(t time.Time) TimeLong {
 	return TimeLong(t.UnixNano() / (int64(time.Millisecond) / int64(time.Nanosecond)))
 }
