@@ -19,3 +19,4 @@ func TestEthECIES(t *testing.T) {
 	PanicError(err)
 	fmt.Println(string(recovered))
 }
+
