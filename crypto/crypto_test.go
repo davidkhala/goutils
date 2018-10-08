@@ -29,20 +29,20 @@ pJpGegIgRHIxIvDzKUpVFK7hSO8dMRiaS+6iwZl25Pi7sb5Zn54=
 `
 
 func TestECDSAPriv_ToPem(t *testing.T) {
-	var dsaObj = ECDSAPriv{}.New(nil)
+	var dsaObj = ECPriv{}.New(nil)
 	var pemBytes = dsaObj.ToPem()
 	fmt.Println(string(pemBytes))
-	dsaObj = ECDSAPriv{}.LoadPem(pemBytes)
+	dsaObj = ECPriv{}.LoadPem(pemBytes)
 	fmt.Println(string(dsaObj.ToPem()))
 }
 func TestECDSAPub_LoadPem(t *testing.T) {
 
 }
 func TestECDSAPriv_Sign(t *testing.T) {
-	var dsaObj = ECDSAPriv{}.New(nil)
+	var dsaObj = ECPriv{}.New(nil)
 	var rawData = []byte("david secret")
 	var signature = dsaObj.Sign(rawData)
-	var dsaPubObj = ECDSAPub{&dsaObj.PrivateKey.PublicKey}
+	var dsaPubObj = ECPub{&dsaObj.PrivateKey.PublicKey}
 	var result = dsaPubObj.Verify(rawData, signature)
 	fmt.Println("is Valid", result)
 }
@@ -50,9 +50,9 @@ func TestECDSAPriv_Sign(t *testing.T) {
 func TestECDSAPriv_LoadPKCS8Pem(t *testing.T) {
 	var pkcs8Obj = PKCS8{}.LoadPem([]byte(testPrivPem))
 	var rawObj = pkcs8Obj.FormatECDSA()
-	var dsaObj = ECDSAPriv{rawObj}
+	var dsaObj = ECPriv{rawObj}
 
-	var dsapubObj = ECDSAPub{}.LoadCert([]byte(testPubPem))
+	var dsapubObj = ECPub{}.LoadCert([]byte(testPubPem))
 	var digest = []byte("anytest")
 	var signature = dsaObj.Sign(digest)
 	var isRight = dsapubObj.Verify(digest, signature)

@@ -12,21 +12,22 @@ import (
 	"math/big"
 )
 
-type ECDSAPriv struct {
+//Used for both ECDSA and ECDH
+type ECPriv struct {
 	*ecdsa.PrivateKey
 }
 
 //generate an EC private key (default to use P256 curve)
-func (ECDSAPriv) New(curve elliptic.Curve) (ECDSAPriv) {
+func (ECPriv) New(curve elliptic.Curve) (ECPriv) {
 	if curve == nil {
 		curve = elliptic.P256()
 	}
 	priv, err := ecdsa.GenerateKey(curve, rand.Reader)
 	PanicError(err)
 
-	return ECDSAPriv{priv}
+	return ECPriv{priv}
 }
-func (t ECDSAPriv) Sign(digest []byte) []byte {
+func (t ECPriv) Sign(digest []byte) []byte {
 	var r, s, err = ecdsa.Sign(rand.Reader, t.PrivateKey, digest)
 
 	PanicError(err)
@@ -48,15 +49,15 @@ func (ECDSASignature) Unmarshal(signature []byte) (ecdsaSignature ECDSASignature
 	PanicError(err)
 	return
 }
-func (ECDSAPriv) LoadPem(pemBytes []byte) (ECDSAPriv) {
+func (ECPriv) LoadPem(pemBytes []byte) (ECPriv) {
 	block, rest := pem.Decode(pemBytes)
 	AssertEmpty(rest, "pem decode failed:"+string(rest))
 	privKey, err := x509.ParseECPrivateKey(block.Bytes)
 	PanicError(err)
-	return ECDSAPriv{privKey}
+	return ECPriv{privKey}
 }
 
-func (t ECDSAPriv) ToPem() []byte {
+func (t ECPriv) ToPem() []byte {
 	writer := bytes.NewBufferString("")
 	keyBytes, err := x509.MarshalECPrivateKey(t.PrivateKey)
 	PanicError(err)
@@ -65,20 +66,20 @@ func (t ECDSAPriv) ToPem() []byte {
 }
 
 // PublicKey is a representation of an elliptic curve public key.
-type ECDSAPub struct {
+type ECPub struct {
 	*ecdsa.PublicKey
 }
 
-func (t ECDSAPub) Verify(digest []byte, signature []byte) bool {
+func (t ECPub) Verify(digest []byte, signature []byte) bool {
 	var ecdsaSignature = ECDSASignature{}.Unmarshal(signature)
 	return ecdsa.Verify(t.PublicKey, digest, ecdsaSignature.R, ecdsaSignature.S)
 }
-func (ECDSAPub) LoadCert(pemBytes []byte) ECDSAPub {
+func (ECPub) LoadCert(pemBytes []byte) ECPub {
 	block, rest := pem.Decode(pemBytes)
 	AssertEmpty(rest, "pem decode failed:"+string(rest))
 	var cert, err = x509.ParseCertificate(block.Bytes)
 	PanicError(err)
 
 	var pubkey = cert.PublicKey.(*ecdsa.PublicKey)
-	return ECDSAPub{pubkey}
+	return ECPub{pubkey}
 }
