@@ -1,4 +1,4 @@
-package goutils
+package crypto
 
 import (
 	"fmt"
@@ -29,7 +29,7 @@ pJpGegIgRHIxIvDzKUpVFK7hSO8dMRiaS+6iwZl25Pi7sb5Zn54=
 `
 
 func TestECDSAPriv_ToPem(t *testing.T) {
-	var dsaObj = ECDSAPriv{}.New()
+	var dsaObj = ECDSAPriv{}.New(nil)
 	var pemBytes = dsaObj.ToPem()
 	fmt.Println(string(pemBytes))
 	dsaObj = ECDSAPriv{}.LoadPem(pemBytes)
@@ -39,7 +39,7 @@ func TestECDSAPub_LoadPem(t *testing.T) {
 
 }
 func TestECDSAPriv_Sign(t *testing.T) {
-	var dsaObj = ECDSAPriv{}.New()
+	var dsaObj = ECDSAPriv{}.New(nil)
 	var rawData = []byte("david secret")
 	var signature = dsaObj.Sign(rawData)
 	var dsaPubObj = ECDSAPub{&dsaObj.PrivateKey.PublicKey}

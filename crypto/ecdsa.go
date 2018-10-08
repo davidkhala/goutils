@@ -1,4 +1,4 @@
-package goutils
+package crypto
 
 import (
 	"bytes"
@@ -8,17 +8,20 @@ import (
 	"crypto/x509"
 	"encoding/asn1"
 	"encoding/pem"
+	. "github.com/davidkhala/goutils"
 	"math/big"
-	"reflect"
 )
 
 type ECDSAPriv struct {
 	*ecdsa.PrivateKey
 }
 
-//generate an EC private key (P256 curve)
-func (ECDSAPriv) New() (ECDSAPriv) {
-	priv, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+//generate an EC private key (default to use P256 curve)
+func (ECDSAPriv) New(curve elliptic.Curve) (ECDSAPriv) {
+	if curve == nil {
+		curve = elliptic.P256()
+	}
+	priv, err := ecdsa.GenerateKey(curve, rand.Reader)
 	PanicError(err)
 
 	return ECDSAPriv{priv}
@@ -61,6 +64,7 @@ func (t ECDSAPriv) ToPem() []byte {
 	return writer.Bytes()
 }
 
+// PublicKey is a representation of an elliptic curve public key.
 type ECDSAPub struct {
 	*ecdsa.PublicKey
 }
@@ -77,29 +81,4 @@ func (ECDSAPub) LoadCert(pemBytes []byte) ECDSAPub {
 
 	var pubkey = cert.PublicKey.(*ecdsa.PublicKey)
 	return ECDSAPub{pubkey}
-}
-
-//default in nodejs sdk
-type PKCS8 struct {
-	pem.Block
-	Key interface{}
-	reflect.Type
-}
-
-func (PKCS8) LoadPem(pemBytes []byte) (PKCS8) {
-	block, rest := pem.Decode(pemBytes)
-	AssertEmpty(rest, "pem decode failed:"+string(rest))
-	privKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)
-	PanicError(err)
-	return PKCS8{*block, privKey, reflect.TypeOf(privKey)}
-}
-func (t PKCS8) FormatECDSA() *ecdsa.PrivateKey {
-	var result = t.Key.(*ecdsa.PrivateKey)
-	return result
-}
-
-func (t PKCS8) ToPem() []byte {
-	writer := bytes.NewBufferString("")
-	pem.Encode(writer, &t.Block)
-	return writer.Bytes()
 }
