@@ -85,10 +85,12 @@ func ToJson(v interface{}) []byte {
 }
 
 //not thread safe
-func RandString(length int) string {
+func RandString(length int, letterBytes string) string {
 	var src = rand.NewSource(time.Now().UnixNano())
+	if letterBytes == "" {
+		PanicString("RandString: empty letter array")
+	}
 
-	var letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	var letterIdxBits = uint(6)                     // 6 bits to represent a letter index
 	var letterIdxMask = int64(1<<letterIdxBits - 1) // All 1-bits, as many as letterIdxBits
 	var letterIdxMax = 63 / letterIdxBits           // # of letter indices fitting in 63 bits
