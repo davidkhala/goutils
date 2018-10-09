@@ -11,3 +11,10 @@ func TestFloat(t *testing.T) {
 	fmt.Println(amountFloat, FormatFloat(amountFloat, 2))
 
 }
+
+var randomBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+func TestRandString(t *testing.T) {
+	var result = RandString(12, randomBytes)
+	fmt.Println(result, len(result))
+}
