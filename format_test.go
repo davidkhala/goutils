@@ -18,3 +18,12 @@ func TestRandString(t *testing.T) {
 	var result = RandString(12, randomBytes)
 	fmt.Println(result, len(result))
 }
+
+func TestIntToByte(t *testing.T) {
+	var i int64 = 1
+	fmt.Println(byte(i))
+	i = 256
+	fmt.Println(byte(i))
+	i = -1
+	fmt.Println(byte(i))
+}

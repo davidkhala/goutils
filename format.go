@@ -3,6 +3,7 @@ package goutils
 import (
 	"encoding/json"
 	"errors"
+	"math"
 	"math/rand"
 	"strconv"
 	"time"
@@ -26,6 +27,14 @@ func ToInt(bytes []byte) int {
 }
 func FormatFloat(f float64, precision int) string {
 	return strconv.FormatFloat(f, 'f', precision, 64)
+}
+
+func RoundFloat(num float64, precision int) float64 {
+	output := math.Pow(10, float64(precision))
+	var round = func(num float64) int {
+		return int(num + math.Copysign(0.5, num))
+	}
+	return float64(round(num*output)) / output
 }
 func FormatInt(integer int64) string {
 	return strconv.FormatInt(integer, 10)
