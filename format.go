@@ -75,7 +75,7 @@ func UnixMilliSecond(t time.Time) TimeLong {
 
 type TimeLong int64
 
-func (t TimeLong) ToString() string {
+func (t TimeLong) String() string {
 	return strconv.FormatInt(int64(t), 10)
 }
 
