@@ -1,8 +1,8 @@
 package goutils
 
 import (
+	"encoding/hex"
 	"encoding/json"
-	"errors"
 	"math"
 	"math/rand"
 	"strconv"
@@ -40,12 +40,6 @@ func FormatInt(integer int64) string {
 	return strconv.FormatInt(integer, 10)
 }
 
-func PanicError(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
-
 type DeferHandler func(errString string, params ...interface{}) (success bool)
 
 func Deferred(handler DeferHandler, params ...interface{}) {
@@ -59,16 +53,7 @@ func Deferred(handler DeferHandler, params ...interface{}) {
 		panic(err)
 	}
 }
-func PanicString(err string) {
-	if err != "" {
-		panic(errors.New(err))
-	}
-}
-func AssertEmpty(rest []byte, message string) {
-	if rest != nil && len(rest) > 0 {
-		PanicString(message)
-	}
-}
+
 func UnixMilliSecond(t time.Time) TimeLong {
 	return TimeLong(t.UnixNano() / (int64(time.Millisecond) / int64(time.Nanosecond)))
 }
@@ -118,4 +103,12 @@ func RandString(length int, letterBytes string) string {
 	}
 
 	return string(b)
+}
+
+var HexEncode = hex.EncodeToString
+
+func HexDecode(s string) []byte {
+	result, err := hex.DecodeString(s)
+	PanicError(err)
+	return result
 }
