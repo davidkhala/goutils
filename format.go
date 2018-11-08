@@ -112,3 +112,24 @@ func HexDecode(s string) []byte {
 	PanicError(err)
 	return result
 }
+
+
+
+func ItoRunes(i int, runes []rune) string {
+	var d = len(runes)
+	var forward = func(p int) (int, int) {
+		rest := p / d
+		module := p % d
+		return rest, module
+	}
+
+	var output []rune
+	r, m := forward(i)
+	output = append(output, runes[m])
+	for r > 0 {
+		r, m = forward(r)
+		output = append(output, runes[m])
+	}
+
+	return string(output)
+}

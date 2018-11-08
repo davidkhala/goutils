@@ -27,3 +27,9 @@ func TestIntToByte(t *testing.T) {
 	i = -1
 	fmt.Println(byte(i))
 }
+func TestItoRunes(t *testing.T) {
+	const charSpace = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	var runes = []rune(charSpace)
+	var result = ItoRunes(50, runes)
+	fmt.Println(result)
+}
