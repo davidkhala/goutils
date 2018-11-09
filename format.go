@@ -113,8 +113,6 @@ func HexDecode(s string) []byte {
 	return result
 }
 
-
-
 func ItoRunes(i int, runes []rune) string {
 	var d = len(runes)
 	var forward = func(p int) (int, int) {
