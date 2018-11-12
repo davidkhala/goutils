@@ -11,7 +11,7 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"crypto/subtle"
-	"github.com/davidkhala/goutils"
+	. "github.com/davidkhala/goutils"
 	"hash"
 	"io"
 	"math/big"
@@ -30,7 +30,7 @@ type ECIESParams struct {
 // the parameters
 func (params ECIESParams) SymDecrypt(key, cipherText []byte) (m []byte) {
 	c, err := params.Cipher(key)
-	goutils.PanicError(err)
+	PanicError(err)
 
 	ctr := cipher.NewCTR(c, cipherText[:params.BlockSize])
 
@@ -43,11 +43,11 @@ func (params ECIESParams) SymDecrypt(key, cipherText []byte) (m []byte) {
 // parameters.
 func (params ECIESParams) SymEncrypt(rand io.Reader, key, m []byte) (cipherText []byte) {
 	c, err := params.Cipher(key)
-	goutils.PanicError(err)
+	PanicError(err)
 
 	iv := make([]byte, params.BlockSize)
 	_, err = io.ReadFull(rand, iv)
-	goutils.PanicError(err)
+	PanicError(err)
 	ctr := cipher.NewCTR(c, iv)
 
 	cipherText = make([]byte, len(m)+params.BlockSize)
@@ -101,7 +101,7 @@ func ParamsFromCurve(curve elliptic.Curve) (params ECIESParams) {
 	case elliptic.P521():
 		params = ECIES_AES256_SHA512
 	default:
-		goutils.PanicString("ecies: unsupported ECIES parameters")
+		PanicString("ecies: unsupported ECIES parameters")
 	}
 	return
 }
@@ -109,14 +109,14 @@ func ParamsFromCurve(curve elliptic.Curve) (params ECIESParams) {
 // ECDH key agreement method used to establish secret keys for encryption.
 func (prv ECPriv) GenerateShared(pub ECPub, skLen, macLen int) (sk []byte) {
 	if prv.PublicKey.Curve != pub.Curve {
-		goutils.PanicString("ecies: invalid elliptic curve")
+		PanicString("ecies: invalid elliptic curve")
 	}
 	if skLen+macLen > (pub.Curve.Params().BitSize+7)/8 {
-		goutils.PanicString("ecies: shared key params are too big")
+		PanicString("ecies: shared key params are too big")
 	}
 	x, _ := pub.Curve.ScalarMult(pub.X, pub.Y, prv.D.Bytes())
 	if x == nil {
-		goutils.PanicString("ecies: shared key is point at infinity")
+		PanicString("ecies: shared key is point at infinity")
 	}
 	sk = make([]byte, skLen+macLen)
 	skBytes := x.Bytes()
@@ -146,7 +146,7 @@ func concatKDF(hash hash.Hash, z []byte, kdLen int) (k []byte) {
 	var big2To32 = new(big.Int).Exp(big.NewInt(2), big.NewInt(32), nil) //TODO what is this
 	var big2To32M1 = new(big.Int).Sub(big2To32, big.NewInt(1))          //TODO what is this
 	if big.NewInt(int64(reps)).Cmp(big2To32M1) > 0 {
-		goutils.PanicString("ecies: can't supply requested key data")
+		PanicString("ecies: can't supply requested key data")
 	}
 
 	counter := []byte{0, 0, 0, 1}
@@ -186,7 +186,7 @@ func (pub ECPub) Encrypt(rand io.Reader, m []byte) (ct []byte) {
 
 	cipherText := params.SymEncrypt(rand, Ke, m)
 	if len(cipherText) <= params.BlockSize {
-		goutils.PanicString("ecies: cipher text is longer than params.BlockSize: " + strconv.Itoa(len(cipherText)) + " > " + strconv.Itoa(params.BlockSize))
+		PanicString("ecies: cipher text is longer than params.BlockSize: " + strconv.Itoa(len(cipherText)) + " > " + strconv.Itoa(params.BlockSize))
 	}
 
 	d := messageTag(params.Hash, Km, cipherText)
@@ -202,7 +202,7 @@ func (pub ECPub) Encrypt(rand io.Reader, m []byte) (ct []byte) {
 // Decrypt decrypts an ECIES ciphertext.
 func (prv ECPriv) Decrypt(c []byte) []byte {
 	if len(c) == 0 {
-		goutils.PanicString("ecies: invalid message")
+		PanicString("ecies: invalid message")
 	}
 	var ecPub = ECPub{&prv.PublicKey}
 	params := ParamsFromCurve(ecPub.Curve)
@@ -219,10 +219,10 @@ func (prv ECPriv) Decrypt(c []byte) []byte {
 	case 2, 3, 4:
 		rLen = (prv.PublicKey.Curve.Params().BitSize + 7) / 4
 		if len(c) < (rLen + hLen + 1) {
-			goutils.PanicString("ecies: invalid message")
+			PanicString("ecies: invalid message")
 		}
 	default:
-		goutils.PanicString("ecies: invalid public key")
+		PanicString("ecies: invalid public key")
 	}
 
 	mStart = rLen
@@ -232,7 +232,7 @@ func (prv ECPriv) Decrypt(c []byte) []byte {
 	R.Curve = ecPub.Curve
 	R.X, R.Y = elliptic.Unmarshal(R.Curve, c[:rLen])
 	if R.X == nil {
-		goutils.PanicString("ecies: invalid public key: point not on curve")
+		PanicString("ecies: invalid public key: point not on curve")
 	}
 
 	z := prv.GenerateShared(ECPub{R}, params.KeyLen, params.KeyLen)
@@ -247,7 +247,7 @@ func (prv ECPriv) Decrypt(c []byte) []byte {
 
 	d := messageTag(params.Hash, Km, c[mStart:mEnd])
 	if subtle.ConstantTimeCompare(c[mEnd:], d) != 1 {
-		goutils.PanicString("ecies: invalid message")
+		PanicString("ecies: invalid message")
 	}
 
 	return params.SymDecrypt(Ke, c[mStart:mEnd])
