@@ -20,6 +20,12 @@ func TestRandString(t *testing.T) {
 	fmt.Println(result, len(result))
 }
 
+func TestInt2Float(t *testing.T) {
+	var amount = "1"
+	var amountFloat float64
+	amountFloat = float64(Atoi(amount))
+	fmt.Println(amountFloat)
+}
 func TestIntToByte(t *testing.T) {
 	var i int64 = 1
 	fmt.Println(byte(i))
