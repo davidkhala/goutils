@@ -6,6 +6,7 @@ import (
 	"math"
 	"math/rand"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -130,4 +131,12 @@ func ItoRunes(i int, runes []rune) string {
 	}
 
 	return string(output)
+}
+
+func PaddingLeft(str string, length int, pad string) string {
+	return strings.Repeat(pad, length-len(str)) + str
+}
+
+func PaddingRight(str string, length int, pad string) string {
+	return str + strings.Repeat(pad, length-len(str))
 }
