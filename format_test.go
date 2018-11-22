@@ -45,3 +45,9 @@ func TestTimeFormat(t *testing.T) {
 	now := time.Now()
 	fmt.Println(now.Format("20060102")) //correct
 }
+
+func TestPaddingLeft(t *testing.T) {
+	var str = "123"
+	var result = PaddingLeft(str, 7, '0')
+	fmt.Println(result)
+}
