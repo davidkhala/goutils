@@ -22,7 +22,7 @@ func ParseCertPem(pemBytes []byte) *x509.Certificate {
 // NOTE: This code is almost a direct copy of the String() function in
 // https://go-review.googlesource.com/c/go/+/67270/1/src/crypto/x509/pkix/pkix.go#26
 // which returns a DN as defined by RFC 2253.
-func GetDN(name *pkix.Name) string {
+func GetDN(name pkix.Name) string {
 	r := name.ToRDNSequence()
 	s := ""
 	for i := 0; i < len(r); i++ {
