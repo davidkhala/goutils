@@ -37,9 +37,6 @@ func RoundFloat(num float64, precision int) float64 {
 	}
 	return float64(round(num*output)) / output
 }
-func FormatInt(integer int64) string {
-	return strconv.FormatInt(integer, 10)
-}
 
 type DeferHandler func(errString string, params ...interface{}) (success bool)
 
