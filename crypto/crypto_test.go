@@ -35,9 +35,6 @@ func TestECDSAPriv_ToPem(t *testing.T) {
 	dsaObj = ECPriv{}.LoadPem(pemBytes)
 	fmt.Println(string(dsaObj.ToPem()))
 }
-func TestECDSAPub_LoadPem(t *testing.T) {
-
-}
 func TestECDSAPriv_Sign(t *testing.T) {
 	var dsaObj = ECPriv{}.New(nil)
 	var rawData = []byte("david secret")
