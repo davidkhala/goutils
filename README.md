@@ -11,4 +11,4 @@ golang utils, it covers
 but without huge vendor directory)
 
 ## TODO
-
+- syndtr/goleveldb
