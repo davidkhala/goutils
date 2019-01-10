@@ -58,6 +58,11 @@ func UnixMilliSecond(t time.Time) TimeLong {
 
 type TimeLong int64
 
+func ParseTime(s string) TimeLong {
+	i, err := strconv.ParseInt(s, 10, 64)
+	PanicError(err)
+	return TimeLong(i)
+}
 func (t TimeLong) String() string {
 	return strconv.FormatInt(int64(t), 10)
 }
