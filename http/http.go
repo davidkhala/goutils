@@ -13,11 +13,18 @@ func SetInsuredGlobal() {
 }
 
 type Response http.Response
+type ResponseJSON struct {
+	StatusCode int // e.g. 200
+	Body       []byte
+}
 
 func (t Response) BodyBytes() []byte {
 	content, err := ioutil.ReadAll(t.Body)
 	PanicError(err)
 	return content
+}
+func (t Response) Trim() ResponseJSON {
+	return ResponseJSON{t.StatusCode, t.BodyBytes()}
 }
 func Get(url string, client *http.Client) Response {
 	var err error
