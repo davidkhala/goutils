@@ -15,7 +15,7 @@ func SetInsuredGlobal() {
 type Response http.Response
 type ResponseJSON struct {
 	StatusCode int // e.g. 200
-	Body       []byte
+	Body       string
 }
 
 func (t Response) BodyBytes() []byte {
@@ -24,7 +24,7 @@ func (t Response) BodyBytes() []byte {
 	return content
 }
 func (t Response) Trim() ResponseJSON {
-	return ResponseJSON{t.StatusCode, t.BodyBytes()}
+	return ResponseJSON{t.StatusCode, string(t.BodyBytes())}
 }
 func Get(url string, client *http.Client) Response {
 	var err error
