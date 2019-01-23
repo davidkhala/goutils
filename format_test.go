@@ -39,6 +39,8 @@ func TestItoRunes(t *testing.T) {
 	var runes = []rune(charSpace)
 	var result = ItoRunes(50, runes)
 	fmt.Println(result)
+	result = ItoRunes(51, runes)
+	fmt.Println(result)
 }
 
 func TestTimeFormat(t *testing.T) {

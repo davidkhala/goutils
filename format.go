@@ -124,12 +124,11 @@ func ItoRunes(i int, runes []rune) string {
 		return rest, module
 	}
 
-	var output []rune
 	r, m := forward(i)
-	output = append(output, runes[m])
+	var output = []rune{runes[m]}
 	for r > 0 {
 		r, m = forward(r)
-		output = append(output, runes[m])
+		output = append([]rune{runes[m]}, output...)
 	}
 
 	return string(output)
