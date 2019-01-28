@@ -30,6 +30,7 @@ func (t PKCS8) FormatECDSA() *ecdsa.PrivateKey {
 
 func (t PKCS8) ToPem() []byte {
 	writer := bytes.NewBufferString("")
-	pem.Encode(writer, &t.Block)
+	err := pem.Encode(writer, &t.Block)
+	PanicError(err)
 	return writer.Bytes()
 }
