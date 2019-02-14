@@ -13,7 +13,7 @@ func TestRange(t *testing.T) {
 		fmt.Println(key, value)
 	}
 }
-func TestJSONParse(t *testing.T) {
+func TestMap2JSON(t *testing.T) {
 	Map["abc"] = "2"
 	fmt.Println(string(ToJson(Map)))
 }
