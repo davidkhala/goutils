@@ -12,3 +12,4 @@ but without huge vendor directory)
 
 ## TODO
 - syndtr/goleveldb
+- EC private key generate does not load string seed to io.reader: panic: unexpected EOF
