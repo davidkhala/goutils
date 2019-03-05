@@ -2,6 +2,7 @@ package crypto
 
 import (
 	"fmt"
+	"github.com/davidkhala/goutils"
 	"testing"
 )
 
@@ -39,6 +40,7 @@ func TestECDSAPriv_Sign(t *testing.T) {
 	var dsaObj = ECPriv{}.New(nil)
 	var rawData = []byte("david secret")
 	var signature = dsaObj.Sign(rawData)
+	fmt.Println("signature is time variant", goutils.HexEncode(signature))
 	var dsaPubObj = ECPub{&dsaObj.PrivateKey.PublicKey}
 	var result = dsaPubObj.Verify(rawData, signature)
 	fmt.Println("is Valid", result)
