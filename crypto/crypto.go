@@ -1,6 +1,6 @@
 package crypto
 
-import "errors"
+import "github.com/pkg/errors"
 
 func assertEmpty(rest []byte, message string) {
 	if rest != nil && len(rest) > 0 {

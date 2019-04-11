@@ -1,6 +1,9 @@
 package goutils
 
-import "errors"
+import (
+	"fmt"
+	"github.com/pkg/errors"
+)
 
 func PanicString(err string) {
 	if err != "" {
@@ -11,4 +14,8 @@ func PanicError(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+func PrintError(err error) {
+	var _, printErr = fmt.Printf("%+v\n\n", err)
+	PanicError(printErr)
 }
