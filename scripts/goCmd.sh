@@ -8,9 +8,9 @@ for ((i = 2; i <= ${#}; i++)); do
 	remain_params="$remain_params $j"
 done
 
-function get() {
+get() {
 	export GIT_TERMINAL_PROMPT=1
-	go get -u -v $remain_params
+	go get -u -v $1
 }
 
 $fcn $remain_params
