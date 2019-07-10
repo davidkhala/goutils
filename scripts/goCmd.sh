@@ -37,6 +37,7 @@ get() {
             git pull
         fi
     fi
+    echo ${orgPath}/${projectName}
 }
 
 $fcn $remain_params
