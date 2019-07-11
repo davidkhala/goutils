@@ -13,20 +13,22 @@ get() {
     local reposURL=$1
     local orgName
     local projectName
+    local GOPATH=$(go env GOPATH)
 
     if [[ ${reposURL} == github* ]]; then
         echo ...using native go get format
         export GIT_TERMINAL_PROMPT=1
-        go get -u -v $1
+        go get -u -v $reposURL
+        echo ${GOPATH}/src/$reposURL
     elif [[ ${reposURL} == https://* ]]; then
         orgName=$(echo ${reposURL} | cut -d '/' -f 4)
         projectName=$(echo ${reposURL} | cut -d '/' -f 5 | cut -d '.' -f 1)
-        get github.com/${projectName}/$orgName
+        get github.com/${projectName}/$orgName # recursive
     elif [[ ${reposURL} == git@* ]]; then
         echo ...using SSH
         orgName=$(echo ${reposURL} | cut -d '/' -f 1 | cut -d ':' -f 2)
         projectName=$(echo ${reposURL} | cut -d '/' -f 2 | cut -d '.' -f 1)
-        local GOPATH=$(go env GOPATH)
+        
         local orgPath=${GOPATH}/src/github.com/${orgName}
         mkdir -p ${orgPath}
         cd ${orgPath}
@@ -36,8 +38,8 @@ get() {
             cd ${orgPath}/${projectName}
             git pull
         fi
+        echo ${orgPath}/${projectName}
     fi
-    echo ${orgPath}/${projectName}
 }
 
 $fcn $remain_params
