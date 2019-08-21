@@ -1,4 +1,6 @@
 # go-utils
+[![Build Status](https://travis-ci.com/davidkhala/goutils.svg?branch=master)](https://travis-ci.com/davidkhala/goutils)
+
 golang utils, it covers
  - go command utils
  - format utils
