@@ -22,12 +22,12 @@ get() {
     elif [[ ${reposURL} == https://* ]]; then
         orgName=$(echo ${reposURL} | cut -d '/' -f 4)
         projectName=$(echo ${reposURL} | cut -d '/' -f 5 | cut -d '.' -f 1)
-        get github.com/${projectName}/$orgName # recursive
+        get github.com/${orgName}/$projectName # recursive
     elif [[ ${reposURL} == git@* ]]; then
         echo ...using SSH
         orgName=$(echo ${reposURL} | cut -d '/' -f 1 | cut -d ':' -f 2)
         projectName=$(echo ${reposURL} | cut -d '/' -f 2 | cut -d '.' -f 1)
-        
+
         local orgPath=${GOPATH}/src/github.com/${orgName}
         mkdir -p ${orgPath}
         cd ${orgPath}
@@ -38,7 +38,18 @@ get() {
             git pull
         fi
         echo ${orgPath}/${projectName}
+    else
+        exit 1
     fi
+}
+
+getAndEnsure() {
+    local projectPath
+    projectPath=$(get "$1" | tail -1)
+    echo [debug] projectPath = $projectPath
+    cd "${projectPath}"
+    dep ensure
+    cd - >/dev/null
 }
 
 $fcn $remain_params
