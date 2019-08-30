@@ -46,7 +46,6 @@ get() {
 getAndEnsure() {
     local projectPath
     projectPath=$(get "$1" | tail -1)
-    echo [debug] projectPath = $projectPath
     cd "${projectPath}"
     dep ensure
     cd - >/dev/null
