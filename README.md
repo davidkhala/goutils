@@ -10,7 +10,7 @@ golang utils, it covers
 ## Notes
 - when `dep ensure` in CICD environment need to access private golang repository as part of vendor, please `cp ./.circleci/.netrc $HOME/`.
   - See in [dep FAQ: consume private repos](https://github.com/golang/dep/blob/master/docs/FAQ.md#how-do-i-get-dep-to-consume-private-git-repos-using-a-github-token)
-
+- [test]golang file with suffix `_test.go` is test file
 ## DONE
 - EC public key encryption (refer to ethereum.ECIES
 but without huge vendor directory)
@@ -19,3 +19,4 @@ but without huge vendor directory)
 - syndtr/goleveldb
 - EC private key generate does not load string seed to io.reader: panic: unexpected EOF
 - travis test has not covered format_test.go
+- [package manager] migrate from `dep` to `go module`. Later is officially native supported from golang 1.12
