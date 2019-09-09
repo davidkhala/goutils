@@ -1,4 +1,4 @@
-name: base
+name: Github Actions
 # This workflow is triggered on pushes to the repository.
 on: [push]
 
