@@ -2,8 +2,10 @@ package goutils
 
 import (
 	"fmt"
+	"github.com/golang/protobuf/ptypes/timestamp"
 	"math"
 	"testing"
+	"time"
 )
 
 var Map = map[string]string{}
@@ -27,4 +29,15 @@ func TestInf(t *testing.T) {
 func TestSlice(t *testing.T) {
 	var array = []int{1, 2, 3}
 	fmt.Println(append([]int{}, array[1:]...))
+}
+func TestTimeStamp(t *testing.T) {
+	var now = time.Now()
+	var unixTime = now.Unix()
+	var unixNano = now.UnixNano()
+
+	fmt.Println(now.String(), unixTime, unixNano)
+	var stamp timestamp.Timestamp
+	stamp.Seconds = now.Unix()
+	stamp.Nanos = int32(now.Nanosecond())
+	fmt.Println(stamp.Seconds, stamp.Nanos)
 }

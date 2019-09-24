@@ -3,6 +3,7 @@ package goutils
 import (
 	"encoding/hex"
 	"encoding/json"
+	"github.com/golang/protobuf/ptypes/timestamp"
 	"math"
 	"math/rand"
 	"strconv"
@@ -47,29 +48,38 @@ func Deferred(handler DeferHandler, params ...interface{}) {
 	}
 	var errString = err.(error).Error()
 	var success = handler(errString, params...)
-	if ! success {
+	if !success {
 		panic(err)
 	}
 }
 
-func UnixMilliSecond(t time.Time) TimeLong {
-	return TimeLong(t.UnixNano() / (int64(time.Millisecond) / int64(time.Nanosecond)))
-}
-
+// unix nano
 type TimeLong int64
 
-func ParseTime(s string) TimeLong {
+func (_ TimeLong) FromTime(t time.Time) TimeLong {
+	return TimeLong(t.UnixNano())
+}
+func (_ TimeLong) FromTimeStamp(t timestamp.Timestamp) TimeLong {
+	return TimeLong(t.GetSeconds()*int64(time.Second) + int64(t.GetNanos()))
+}
+func (_ TimeLong) FromString(s string) TimeLong {
 	i, err := strconv.ParseInt(s, 10, 64)
 	PanicError(err)
 	return TimeLong(i)
+}
+func (_ TimeLong) FromUnixMilliSecond(t int64) TimeLong {
+	return TimeLong(t * int64(time.Millisecond))
+}
+func (t TimeLong) UnixMilliSecond() int64 {
+	return int64(t) / int64(time.Millisecond)
 }
 func (t TimeLong) String() string {
 	return strconv.FormatInt(int64(t), 10)
 }
 
 /**
-	a wrapper to panic Unmarshal(non-pointer v)
- */
+a wrapper to panic Unmarshal(non-pointer v)
+*/
 func FromJson(jsonString []byte, v interface{}) {
 	err := json.Unmarshal(jsonString, v)
 	PanicError(err)
