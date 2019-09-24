@@ -10,6 +10,12 @@ golang utils, it covers
 ## Notes
 - when `dep ensure` in CICD environment need to access private golang repository as part of vendor, please `cp ./.circleci/.netrc $HOME/`.
   - See in [dep FAQ: consume private repos](https://github.com/golang/dep/blob/master/docs/FAQ.md#how-do-i-get-dep-to-consume-private-git-repos-using-a-github-token)
+  - content of `.netrc`:
+   ```
+      machine github.com
+       login [YOUR_GITHUB_USERNAME]
+       password [YOUR_GITHUB_TOKEN]
+   ```
 - [test]golang file with suffix `_test.go` is test file
 ## DONE
 - EC public key encryption (refer to ethereum.ECIES
