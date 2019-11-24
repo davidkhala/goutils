@@ -24,6 +24,9 @@ golang utils, it covers
 - EC public key encryption (refer to ethereum.ECIES
 but without huge vendor directory)
 
+## [Go Module](./vgo.md)
+
+
 ## TODO
 - syndtr/goleveldb
 - EC private key generate does not load string seed to io.reader: panic: unexpected EOF
