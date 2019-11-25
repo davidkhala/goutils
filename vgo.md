@@ -13,7 +13,6 @@
 **go: modules disabled inside GOPATH/src by GO111MODULE=auto; see '[go help modules](./vgo_man.md)'**
 
 ## Prune
-
 `go mod tidy`
 - It adds new module requirements for packages not provided by any known module
 - It removes requirements on modules that don't provide any imported packages. 
