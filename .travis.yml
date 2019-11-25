@@ -2,11 +2,11 @@ language: go
 go:
   - 1.12.x
 dist: bionic
+before_install:
+  - export GO111MODULE=on
 install:
   - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   - dep ensure
-before_script:
-  - export GO111MODULE=on
 script:
   - go test -v github.com/davidkhala/goutils
   - go test -v github.com/davidkhala/goutils/crypto
