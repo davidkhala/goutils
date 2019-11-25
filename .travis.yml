@@ -12,7 +12,9 @@ matrix:
         - go test -v github.com/davidkhala/goutils/http
         - go test -v github.com/davidkhala/goutils/leveldb
         - go test -v github.com/davidkhala/goutils/restful
-    - language: golang
+    - language: go
+      before_install:
+        - export GO111MODULE=auto
       go:
         - 1.11.x
       install:
