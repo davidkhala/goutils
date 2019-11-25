@@ -5,7 +5,7 @@ including recording and resolving dependencies on other modules.
 Modules replace the old GOPATH-based approach to specifying
 which source files are used in a given build.
 
-Preliminary module support
+## Preliminary module support
 
 Go 1.11 includes preliminary support for Go modules,
 including a new module-aware 'go get' command.
@@ -22,13 +22,14 @@ go commands from within that file tree.
 For more fine-grained control, the module support in Go 1.11 respects
 a temporary environment variable, GO111MODULE, which can be set to one
 of three string values: off, on, or auto (the default).
-If GO111MODULE=off, then the go command never uses the
+
+- If **GO111MODULE=off**, then the go command never uses the
 new module support. Instead it looks in vendor directories and GOPATH
 to find dependencies; we now refer to this as "GOPATH mode."
-If GO111MODULE=on, then the go command requires the use of modules,
+- If **GO111MODULE=on**, then the go command requires the use of modules,
 never consulting GOPATH. We refer to this as the command being
 module-aware or running in "module-aware mode".
-If GO111MODULE=auto or is unset, then the go command enables or
+- If **GO111MODULE=auto** or is unset, then the go command enables or
 disables module support based on the current directory.
 Module support is enabled only when the current directory is outside
 GOPATH/src and itself contains a go.mod file or is below a directory
@@ -38,7 +39,7 @@ In module-aware mode, GOPATH no longer defines the meaning of imports
 during a build, but it still stores downloaded dependencies (in GOPATH/pkg/mod)
 and installed commands (in GOPATH/bin, unless GOBIN is set).
 
-Defining a module
+## Defining a module
 
 A module is defined by a tree of Go source files with a go.mod file
 in the tree's root directory. The directory containing the go.mod file
@@ -82,7 +83,7 @@ Once the go.mod file exists, no additional steps are required:
 go commands like 'go build', 'go test', or even 'go list' will automatically
 add new dependencies as needed to satisfy imports.
 
-The main module and the build list
+## The main module and the build list
 
 The "main module" is the module containing the directory where the go command
 is run. The go command finds the module root by looking for a go.mod in the
@@ -113,7 +114,7 @@ and the build list. For example:
 	go list -m -f={{.Dir}}  # print root directory of main module
 	go list -m all          # print build list
 
-Maintaining module requirements
+## Maintaining module requirements
 
 The go.mod file is meant to be readable and editable by both
 programmers and tools. The go command itself automatically updates the go.mod file
@@ -171,7 +172,7 @@ If invoked with -mod=vendor, the go command assumes that the vendor
 directory holds the correct copies of dependencies and ignores
 the dependency descriptions in go.mod.
 
-Pseudo-versions
+## Pseudo-versions
 
 The go.mod file and the go command more generally use semantic versions as
 the standard form for describing module versions, so that versions can be
@@ -187,15 +188,15 @@ the most recent tagged version in the commit graph before this commit.
 
 There are three pseudo-version forms:
 
-vX.0.0-yyyymmddhhmmss-abcdefabcdef is used when there is no earlier
+- vX.0.0-yyyymmddhhmmss-abcdefabcdef is used when there is no earlier
 versioned commit with an appropriate major version before the target commit.
 (This was originally the only form, so some older go.mod files use this form
 even for commits that do follow tags.)
 
-vX.Y.Z-pre.0.yyyymmddhhmmss-abcdefabcdef is used when the most
+- vX.Y.Z-pre.0.yyyymmddhhmmss-abcdefabcdef is used when the most
 recent versioned commit before the target commit is vX.Y.Z-pre.
 
-vX.Y.(Z+1)-0.yyyymmddhhmmss-abcdefabcdef is used when the most
+- vX.Y.(Z+1)-0.yyyymmddhhmmss-abcdefabcdef is used when the most
 recent versioned commit before the target commit is vX.Y.Z.
 
 Pseudo-versions never need to be typed by hand: the go command will accept
@@ -203,7 +204,7 @@ the plain commit hash and translate it into a pseudo-version (or a tagged
 version if available) automatically. This conversion is an example of a
 module query.
 
-Module queries
+## Module queries
 
 The go command accepts a "module query" in place of a module version
 both on the command line and in the main module's go.mod file.
@@ -247,7 +248,7 @@ For example, these commands are all valid:
 	go get github.com/gorilla/mux@c856192   # records v0.0.0-20180517173623-c85619274f5d
 	go get github.com/gorilla/mux@master    # records current meaning of master
 
-Module compatibility and semantic versioning
+## Module compatibility and semantic versioning
 
 The go command requires that modules use semantic versions and expects that
 the versions accurately describe compatibility: it assumes that v1.5.4 is a
@@ -315,13 +316,13 @@ See https://research.swtch.com/vgo-import for more information about
 semantic import versioning, and see https://semver.org/ for more about
 semantic versioning.
 
-Module code layout
+## Module code layout
 
 For now, see https://research.swtch.com/vgo-module for information
 about how source code in version control systems is mapped to
 module file trees.
 
-Module downloading and verification
+## Module downloading and verification
 
 The go command maintains, in the main module's root directory alongside
 go.mod, a file named go.sum containing the expected cryptographic checksums
@@ -344,7 +345,7 @@ environment variable.
 See 'go help goproxy' for details about the proxy and also the format of
 the cached downloaded packages.
 
-Modules and vendoring
+## Modules and vendoring
 
 When using modules, the go command completely ignores vendor directories.
 
