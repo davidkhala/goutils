@@ -15,10 +15,7 @@ get() {
 	local GOPATH=$(go env GOPATH)
 
 	if [[ ${reposURL} == github* ]]; then
-		echo ...using native go get format
-		export GIT_TERMINAL_PROMPT=1
-		go get -u -v $reposURL # TODO not good in go mod
-		echo ${GOPATH}/src/$reposURL
+		get "https://${reposURL}.git"
 	elif [[ ${reposURL} == https://* ]]; then
 		orgName=$(echo ${reposURL} | cut -d '/' -f 4)
 		projectName=$(echo ${reposURL} | cut -d '/' -f 5 | cut -d '.' -f 1)
