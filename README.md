@@ -33,3 +33,5 @@ but without huge vendor directory)
 - travis test has not covered format_test.go
 - [package manager] migrate from `dep` to `go module`. Later is officially native supported from golang 1.12
     - Reference: https://liujiacai.net/blog/2019/10/24/go-modules/
+- `dep ensure` display 
+  - `dep: WARNING: Unknown field in manifest: prune`
