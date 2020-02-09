@@ -10,6 +10,11 @@ golang utils, it covers
 ## Prerequisite
 - golang 1.12+
 
+
+## vendor tool
+- [deprecated] dep
+- [Go Module](./vgo.md)
+
 ## Notes
 - when `dep ensure` in CICD environment need to access private golang repository as part of vendor, please `cp ./.circleci/.netrc $HOME/`.
   - See in [dep FAQ: consume private repos](https://github.com/golang/dep/blob/master/docs/FAQ.md#how-do-i-get-dep-to-consume-private-git-repos-using-a-github-token)
@@ -24,14 +29,8 @@ golang utils, it covers
 - EC public key encryption (refer to ethereum.ECIES
 but without huge vendor directory)
 
-## [Go Module](./vgo.md)
-
 
 ## TODO
 - syndtr/goleveldb
 - EC private key generate does not load string seed to io.reader: panic: unexpected EOF
 - travis test has not covered format_test.go
-- [package manager] migrate from `dep` to `go module`. Later is officially native supported from golang 1.12
-    - Reference: https://liujiacai.net/blog/2019/10/24/go-modules/
-- `dep ensure` display 
-  - `dep: WARNING: Unknown field in manifest: prune`
