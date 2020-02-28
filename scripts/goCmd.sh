@@ -50,13 +50,20 @@ get() {
 }
 
 getAndEnsure() {
+	local currentMode=$GO111MODULE
 	local projectPath
 	projectPath=$(get "$1" | tail -1)
 	cd "${projectPath}"
-	setModuleMode on
+	if [[ ! "$currentMode" == "on" ]]; then
+		setModuleMode on
+	fi
+
 	go mod vendor
 	cd - >/dev/null
-	setModuleMode auto
+	if [[ ! "$currentMode" == "on" ]]; then
+		setModuleMode $currentMode
+	fi
+
 }
 
 setModuleMode() {
