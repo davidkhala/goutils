@@ -53,8 +53,10 @@ getAndEnsure() {
 	local projectPath
 	projectPath=$(get "$1" | tail -1)
 	cd "${projectPath}"
-	dep ensure
+	setModuleMode on
+	go mod vendor
 	cd - >/dev/null
+	setModuleMode auto
 }
 
 setModuleMode() {
