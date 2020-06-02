@@ -25,6 +25,7 @@ golang utils, it covers
        password [YOUR_GITHUB_TOKEN]
    ```
 - [test]golang file with suffix `_test.go` is test file
+- code security: `securego/gosec`
 ## DONE
 - EC public key encryption (refer to ethereum.ECIES
 but without huge vendor directory)
