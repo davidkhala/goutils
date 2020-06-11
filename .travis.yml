@@ -7,11 +7,7 @@ matrix:
       before_install:
         - export GO111MODULE=on
       script:
-        - go test -v github.com/davidkhala/goutils
-        - go test -v github.com/davidkhala/goutils/crypto
-        - go test -v github.com/davidkhala/goutils/http
-        - go test -v github.com/davidkhala/goutils/leveldb
-        - go test -v github.com/davidkhala/goutils/restful
+        - go test
     - language: go
       dist: bionic
       go:

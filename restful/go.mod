@@ -17,6 +17,5 @@ require (
 	github.com/pkg/errors v0.8.1
 	github.com/ugorji/go v1.1.7
 	golang.org/x/sys v0.0.0-20191120155948-bd437916bb0e
-	gopkg.in/go-playground/validator.v9 v9.30.1
 	gopkg.in/yaml.v2 v2.2.7
 )
