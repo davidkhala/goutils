@@ -1,6 +1,6 @@
 module github.com/davidkhala/goutils/restful
 
-go 1.12
+go 1.14
 
 require (
 	github.com/davidkhala/goutils v0.0.0-20191106141748-e4eb9e743b1f

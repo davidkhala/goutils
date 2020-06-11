@@ -1,6 +1,6 @@
 module github.com/davidkhala/goutils/leveldb
 
-go 1.12
+go 1.14
 
 require (
 	github.com/davidkhala/goutils v0.0.0-20200602102838-a2a13a7a13f5
