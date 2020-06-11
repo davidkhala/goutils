@@ -7,11 +7,12 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-func SetupLogrus() {
+func SetupLogrus() *logrus.Logger {
 	logrus.SetFormatter(&logrus.TextFormatter{
 		ForceColors: true,
 	})
 	logrus.SetLevel(logrus.DebugLevel)
+	return logrus.StandardLogger()
 }
 func Zap() *zap.Logger {
 	config := zap.NewDevelopmentConfig()
