@@ -65,7 +65,9 @@ getAndEnsure() {
 	fi
 
 }
-
+sync() {
+	go list -m -json all
+}
 setModuleMode() {
 	modes=('off' 'on' 'auto')
 	if [[ " ${modes[*]} " == *"$1"* ]]; then
