@@ -9,7 +9,8 @@ import (
 
 func SetupLogrus() *logrus.Logger {
 	logrus.SetFormatter(&logrus.TextFormatter{
-		ForceColors: true,
+		ForceColors:   true,
+		FullTimestamp: true,
 	})
 	logrus.SetLevel(logrus.DebugLevel)
 	return logrus.StandardLogger()
