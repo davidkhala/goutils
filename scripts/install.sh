@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -e
+fcn=$1
+remain_params=""
+for ((i = 2; i <= ${#}; i++)); do
+	j=${!i}
+	remain_params="$remain_params $j"
+done
+
+isMacOS() {
+	[[ $(uname) == "Darwin" ]]
+	return $?
+}
+
+isUbuntu20() {
+	lsb_release -d | grep "Ubuntu 20."
+	return $?
+}
+
+latest() {
+	if [[ "$1" == "remove" ]]; then
+		if isMacOS; then
+			brew uninstall go || true
+		elif isUbuntu20; then
+			sudo apt -y remove golang-1.14-go
+		else
+			sudo apt-get -y remove golang-go
+			sudo add-apt-repository --remove -y ppa:longsleep/golang-backports
+		fi
+
+	else
+		if isMacOS; then
+			brew install go || true
+		elif isUbuntu20; then
+			sudo apt install -y golang-1.14-go
+		else
+			sudo add-apt-repository -y ppa:longsleep/golang-backports
+			sudo apt update
+			sudo apt install -y golang-go
+		fi
+	fi
+}
+$fcn $remain_params
