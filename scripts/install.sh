@@ -22,7 +22,7 @@ latest() {
 		if isMacOS; then
 			brew uninstall go || true
 		elif isUbuntu20; then
-			sudo apt -y remove golang-1.14-go
+			sudo snap remove go
 		else
 			sudo apt-get -y remove golang-go
 			sudo add-apt-repository --remove -y ppa:longsleep/golang-backports
@@ -32,7 +32,7 @@ latest() {
 		if isMacOS; then
 			brew install go || true
 		elif isUbuntu20; then
-			sudo apt install -y golang-1.14-go
+			sudo snap install go --classic
 		else
 			sudo add-apt-repository -y ppa:longsleep/golang-backports
 			sudo apt update
