@@ -3,11 +3,29 @@ package http
 import (
 	"bytes"
 	"crypto/tls"
+	"crypto/x509"
 	. "github.com/davidkhala/goutils"
 	"io/ioutil"
 	"net/http"
 )
 
+func BeginTLSConfig() (config *tls.Config) {
+	config = &tls.Config{}
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = config
+	return
+}
+func SetRootCAs(config *tls.Config, fileNames []string) {
+	roots := x509.NewCertPool()
+	for _, fileName := range fileNames {
+		rootPEM, err := ioutil.ReadFile(fileName)
+		PanicError(err)
+		ok := roots.AppendCertsFromPEM(rootPEM)
+		if !ok {
+			panic("failed to parse root certificate:" + fileName)
+		}
+	}
+	config.RootCAs = roots
+}
 func SetInsuredGlobal() {
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 }
