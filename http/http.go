@@ -10,8 +10,10 @@ import (
 )
 
 func BeginTLSConfig() (config *tls.Config) {
-	config = &tls.Config{}
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = config
+	if http.DefaultTransport.(*http.Transport).TLSClientConfig == nil {
+		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{}
+	}
+	config = http.DefaultTransport.(*http.Transport).TLSClientConfig
 	return
 }
 func SetRootCAs(config *tls.Config, rootPEMs []string) {
@@ -25,7 +27,8 @@ func SetRootCAs(config *tls.Config, rootPEMs []string) {
 	config.RootCAs = roots
 }
 func SetInsuredGlobal() {
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+	var config = BeginTLSConfig()
+	config.InsecureSkipVerify = true
 }
 
 type Response http.Response

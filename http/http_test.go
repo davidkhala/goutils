@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/davidkhala/goutils"
 	"github.com/stretchr/testify/assert"
+	"net/http"
 	"testing"
 )
 
@@ -19,4 +20,18 @@ func TestTimeout(t *testing.T) {
 	defer goutils.Deferred(handler)
 	Get(invalidUrl, nil)
 
+}
+func TestBeginTLSConfig(t *testing.T) {
+	var originalGlobal = http.DefaultTransport.(*http.Transport).TLSClientConfig
+	if originalGlobal != nil {
+		t.Fatal("original global is not clean", originalGlobal)
+	}
+	var config = BeginTLSConfig()
+	var changedGlobal = http.DefaultTransport.(*http.Transport).TLSClientConfig
+	if changedGlobal == nil {
+		t.Fatalf("changed global should not be nil")
+	}
+	if config == nil {
+		t.Fatalf("reponse config should not be nil")
+	}
 }
