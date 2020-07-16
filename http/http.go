@@ -14,14 +14,12 @@ func BeginTLSConfig() (config *tls.Config) {
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = config
 	return
 }
-func SetRootCAs(config *tls.Config, fileNames []string) {
+func SetRootCAs(config *tls.Config, rootPEMs []string) {
 	roots := x509.NewCertPool()
-	for _, fileName := range fileNames {
-		rootPEM, err := ioutil.ReadFile(fileName)
-		PanicError(err)
-		ok := roots.AppendCertsFromPEM(rootPEM)
+	for _, rootPEM := range rootPEMs {
+		ok := roots.AppendCertsFromPEM([]byte(rootPEM))
 		if !ok {
-			panic("failed to parse root certificate:" + fileName)
+			panic("failed to parse root certificate \n [" + rootPEM + "]")
 		}
 	}
 	config.RootCAs = roots
