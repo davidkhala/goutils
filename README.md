@@ -8,22 +8,26 @@ golang utils, it covers
  - http request utils
 
 ## Prerequisite
-- golang 1.12+
+- golang 1.12.x
 
 
 ## vendor tool
 - [Go Module](./vgo.md)
 
 ## Notes
-- when download private github vendor packages in CICD environment, please `cp ./.circleci/.netrc $HOME/`.
-  - See in [dep FAQ: consume private repos](https://github.com/golang/dep/blob/master/docs/FAQ.md#how-do-i-get-dep-to-consume-private-git-repos-using-a-github-token)
-  - content of `.netrc`:
-   ```
-      machine github.com
-       login [YOUR_GITHUB_USERNAME]
-       password [YOUR_GITHUB_TOKEN]
-   ```
-- [test]golang file with suffix `_test.go` is test file
+
+### Fetch private github vendor packages
+- For `dep`, See in [dep FAQ: consume private repos](https://github.com/golang/dep/blob/master/docs/FAQ.md#how-do-i-get-dep-to-consume-private-git-repos-using-a-github-token)
+    - content of `.netrc`:
+         ```
+            machine github.com
+             login [YOUR_GITHUB_USERNAME]
+             password [GITHUB_TOKEN]
+         ```    
+- For Go module
+  - `git config --global url."https://[YOUR_GITHUB_USERNAME]:[GITHUB_TOKEN]@github.com".insteadOf "https://github.com"` 
+
+- [test] golang file with suffix `_test.go` is test file
 - code security: `securego/gosec`
 
 ## DONE
