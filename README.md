@@ -1,5 +1,8 @@
 # go-utils
-[![Build Status](https://travis-ci.com/davidkhala/goutils.svg?branch=master)](https://travis-ci.com/davidkhala/goutils) ![Github Actions](https://github.com/davidkhala/goutils/workflows/Github%20Actions/badge.svg)
+
+[![Build Status](https://travis-ci.com/davidkhala/goutils.svg?branch=stable)](https://travis-ci.com/davidkhala/goutils) 
+
+[![Github Actions](https://github.com/davidkhala/goutils/workflows/Github%20Actions/badge.svg?branch=stable)](https://github.com/davidkhala/goutils/actions?query=branch%3Astable)
 
 golang utils, it covers
  - go command utils

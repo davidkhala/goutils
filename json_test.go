@@ -2,7 +2,6 @@ package goutils
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -24,10 +23,6 @@ func TestFromJson(t *testing.T) {
 	FromJson([]byte(`{  "url": "www.google.com",  "title": "Google"}`), &composite)
 	fmt.Println(composite)
 	fmt.Println(string(ToJson(composite)))
-	assert.Panics(t, func() {
-		FromJson(nil, &composite)
-	}, "should panic from nil json bytes")
-
 }
 func TestFromJson2(t *testing.T) {
 
@@ -42,9 +37,6 @@ func TestFromJson2(t *testing.T) {
 
 	fmt.Println(composite)
 	fmt.Println(string(ToJson(composite)))
-	assert.Panics(t, func() {
-		FromJson(nil, &composite)
-	}, "should panic from nil json bytes")
 
 }
 func TestToJson(t *testing.T) {
