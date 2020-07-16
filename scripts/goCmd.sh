@@ -54,17 +54,16 @@ getAndEnsure() {
 	local projectPath
 	projectPath=$(get "$1" | tail -1)
 	cd "${projectPath}"
-	if [[ ! "$currentMode" == "on" ]]; then
-		setModuleMode on
+	if [ -f Gopkg.toml ]; then
+		dep ensure
+	else
+		export GO111MODULE=on
+		go mod vendor
+		export GO111MODULE=$currentMode
 	fi
-
-	go mod vendor
 	cd - >/dev/null
-	if [[ ! "$currentMode" == "on" ]]; then
-		setModuleMode $currentMode
-	fi
-
 }
+
 sync() {
 	go list -m -json all
 }
