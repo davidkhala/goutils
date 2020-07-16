@@ -1,19 +1,12 @@
-matrix:
-  include:
-    - language: go
-      go:
-        - 1.12.x
-      dist: bionic
-      before_install:
-        - export GO111MODULE=on
-      script:
-        - go test
-    - language: go
-      dist: bionic
-      go:
-        - 1.11.x
-      install:
-        - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-        - dep ensure
-      script:
-        - ./scripts/test/goCMDTest.sh
+dist: bionic
+language: go
+go:
+  - 1.12.x
+before_install:
+  - export GO111MODULE=on
+  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+install:
+  - go mod vendor
+script:
+  - go test -v .
+  - ./scripts/test/goCMDTest.sh
