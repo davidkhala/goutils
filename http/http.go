@@ -9,11 +9,12 @@ import (
 	"net/http"
 )
 
-func BeginTLSConfig() (config *tls.Config) {
+// return the pointer to global config
+func GetTLSConfigGlobal() (globalConfig *tls.Config) {
 	if http.DefaultTransport.(*http.Transport).TLSClientConfig == nil {
 		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{}
 	}
-	config = http.DefaultTransport.(*http.Transport).TLSClientConfig
+	globalConfig = http.DefaultTransport.(*http.Transport).TLSClientConfig
 	return
 }
 func SetRootCAs(config *tls.Config, rootPEMs []string) {
@@ -27,7 +28,7 @@ func SetRootCAs(config *tls.Config, rootPEMs []string) {
 	config.RootCAs = roots
 }
 func SetInsuredGlobal() {
-	var config = BeginTLSConfig()
+	var config = GetTLSConfigGlobal()
 	config.InsecureSkipVerify = true
 }
 
@@ -71,10 +72,10 @@ func Post(url string, contentType string, body []byte, client *http.Client) Resp
 	PanicError(err)
 	return Response(*resp)
 }
-func InsecuredClient() http.Client {
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+func GetHttpClient(config *tls.Config) *http.Client {
+	var tr = &http.Transport{
+		TLSClientConfig: config,
 	}
-	return http.Client{Transport: tr}
+	return &http.Client{Transport: tr}
 
 }
