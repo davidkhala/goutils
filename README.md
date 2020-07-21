@@ -40,3 +40,5 @@ golang utils, it covers
 ## TODO
 - syndtr/goleveldb
 - EC private key generate does not load string seed to io.reader: panic: unexpected EOF
+- [goland plugin](https://golang.org/pkg/plugin/)
+    - Hello world sample: https://github.com/vladimirvivien/go-plugin-example
