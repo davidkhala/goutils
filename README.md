@@ -17,7 +17,7 @@ golang utils, it covers
 ## Notes
 - [test]golang file with suffix `_test.go` is test file
 - code security: `securego/gosec`
-
+- [conditional build](https://golang.org/pkg/go/build/#hdr-Build_Constraints)
 ## DONE
 - EC public key encryption (refer to ethereum.ECIES but without huge vendor directory)
 
