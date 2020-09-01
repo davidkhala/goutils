@@ -10,7 +10,7 @@ golang utils, it covers
  - http request utils
 
 ## Prerequisite
-- golang 1.12.x
+- golang 1.11.x
 
 
 ## vendor tool
