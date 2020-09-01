@@ -20,6 +20,7 @@ golang utils, it covers
 - [conditional build](https://golang.org/pkg/go/build/#hdr-Build_Constraints)
 - [test] golang file with suffix `_test.go` is test file
 - code security: `securego/gosec`
+- `Directory and file names that begin with "." or "_" are ignored by the go tool, as are directories named "testdata".`
 
 ### Fetch private github vendor packages
 - For `dep`, See in [dep FAQ: consume private repos](https://github.com/golang/dep/blob/master/docs/FAQ.md#how-do-i-get-dep-to-consume-private-git-repos-using-a-github-token)
