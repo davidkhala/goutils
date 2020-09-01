@@ -18,6 +18,7 @@ golang utils, it covers
 - [test]golang file with suffix `_test.go` is test file
 - code security: `securego/gosec`
 - [conditional build](https://golang.org/pkg/go/build/#hdr-Build_Constraints)
+- Directory and file names that begin with "." or "_" are ignored by the go tool, as are directories named "testdata".
 ## DONE
 - EC public key encryption (refer to ethereum.ECIES but without huge vendor directory)
 
