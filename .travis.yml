@@ -11,5 +11,4 @@ before_install:
   - export GO111MODULE=on
 script:
   - go test
-  - ./scripts/test/goCMDTest.sh
 
