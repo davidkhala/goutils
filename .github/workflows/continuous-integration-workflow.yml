@@ -3,12 +3,20 @@ name: Github Actions
 on: [push]
 
 jobs:
-  checks:
-    name: run
-    runs-on: ubuntu-18.04
+  go-cmd:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: install go
-        uses: cedrickring/golang-action/go1.12@1.3.0
+        uses: cedrickring/golang-action/go1.14@1.6.0
         env:
           GO111MODULE: "on"
+      - run: ./scripts/goCmd.sh get github.com/davidkhala/chaincode
+      - name: cleanup
+        run: export GOPATH=$(go env GOPATH); rm -rf ${GOPATH}/src/github.com/davidkhala/chaincode/; 
+      - run: ./scripts/goCmd.sh get https://github.com/davidkhala/chaincode
+      - name: cleanup
+        run: export GOPATH=$(go env GOPATH); rm -rf ${GOPATH}/src/github.com/davidkhala/chaincode/; 
+      - run: ./scripts/goCmd.sh get https://github.com/davidkhala/chaincode.git
+      - name: duplicate test
+        run: ./scripts/goCmd.sh get github.com/davidkhala/chaincode
