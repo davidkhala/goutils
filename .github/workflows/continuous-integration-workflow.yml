@@ -20,3 +20,6 @@ jobs:
       - run: ./scripts/goCmd.sh get https://github.com/davidkhala/chaincode.git
       - name: duplicate test
         run: ./scripts/goCmd.sh get github.com/davidkhala/chaincode
+      - name: cleanup
+        run: export GOPATH=$(go env GOPATH); rm -rf ${GOPATH}/src/github.com/davidkhala/chaincode/; 
+      - run: ./scripts/goCmd.sh get https://github.com/davidkhala/chaincode.git release-1.4
