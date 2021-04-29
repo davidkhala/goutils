@@ -16,12 +16,8 @@ golang utils, it covers
 ## vendor tool
 - [Go Module](./vgo.md)
 
-## Notes
-- [conditional build](https://golang.org/pkg/go/build/#hdr-Build_Constraints)
-- [test] golang file with suffix `_test.go` is test file
-- code security: `securego/gosec`
-- `Directory and file names that begin with "." or "_" are ignored by the go tool, as are directories named "testdata".`
-- git tag `1.4.1` is not recognizable for `go mod`, use `v1.4.1` instead
+## [Notes](https://github.com/davidkhala/goutils/wiki/Notes)
+
 ### Fetch private github vendor packages
 - For `dep`, See in [dep FAQ: consume private repos](https://github.com/golang/dep/blob/master/docs/FAQ.md#how-do-i-get-dep-to-consume-private-git-repos-using-a-github-token)
     - content of `.netrc`:
