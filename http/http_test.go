@@ -24,5 +24,5 @@ func TestBeginTLSConfig(t *testing.T) {
 
 func TestGet(t *testing.T) {
 	resp := Get("http://www.google.com", nil)
-	fmt.Println(string(resp.BodyBytes()))
+	fmt.Println(resp.Status)
 }
