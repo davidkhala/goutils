@@ -2,20 +2,18 @@ name: Github Actions
 on: [push]
 
 jobs:
-  checks:
-    name: run
+  template-job:
+    env:
+      GO111MODULE: "on"
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go 1.11
         uses: actions/setup-go@v2
         with:
           go-version: 1.11
-        id: go
       - uses: actions/checkout@v2
-      - name: Get dependencies
-        run: |
-          export GO111MODULE=on
-          go mod vendor
+      - name: Vendor
+        run: go mod vendor
       - name: Build
         run: go build -v .
       - name: Test
