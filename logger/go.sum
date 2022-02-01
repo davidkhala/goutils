@@ -3,8 +3,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/davidkhala/goutils v0.0.0-20200611080058-d34a8ca7349f h1:EOAr3dDu/u2EgwB423AHnCSy5bZQE50Ua10S2NclJDY=
-github.com/davidkhala/goutils v0.0.0-20200611080058-d34a8ca7349f/go.mod h1:2TnryJhGwobGIVm3fLN1/1nOWKGLFrzdObri9JdtPsk=
+github.com/davidkhala/goutils v0.0.0-20220201054927-15a761dad253 h1:OBY01oekNFEof4E8VM/yIojjPUHeujula3li7FbUzQE=
+github.com/davidkhala/goutils v0.0.0-20220201054927-15a761dad253/go.mod h1:2TnryJhGwobGIVm3fLN1/1nOWKGLFrzdObri9JdtPsk=
 github.com/golang/protobuf v1.4.0-rc.1/go.mod h1:ceaxUfeHdC40wWswd/P6IGgMaK3YpKi5j83Wpe3EHw8=
 github.com/golang/protobuf v1.4.0-rc.1.0.20200221234624-67d41d38c208/go.mod h1:xKAWHe0F5eneWXFV3EuXVDTCmh+JuBKY0li0aMyXATA=
 github.com/golang/protobuf v1.4.0-rc.2/go.mod h1:LlEzMj4AhA7rCAGe4KMBDvJI+AwstrUpVNzEA03Pprs=
