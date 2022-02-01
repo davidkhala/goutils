@@ -1,8 +1,8 @@
 package goutils
 
 import (
+	"errors"
 	"fmt"
-	"github.com/pkg/errors"
 )
 
 func PanicString(err string) {
