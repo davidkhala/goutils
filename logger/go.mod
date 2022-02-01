@@ -1,6 +1,6 @@
 module github.com/davidkhala/goutils/logger
 
-go 1.14
+go 1.16
 
 require (
 	github.com/davidkhala/goutils v0.0.0-20200611080058-d34a8ca7349f
