@@ -10,7 +10,7 @@ jobs:
       GO111MODULE: "on"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@main
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
