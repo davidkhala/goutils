@@ -46,13 +46,9 @@ get() {
 }
 
 getAndEnsure() {
-	local currentMode=$GO111MODULE
 	local projectPath
 	projectPath=$(get "$1" "$2" | tail -1)
 	cd "${projectPath}"
-	if [[ ! "$currentMode" == "on" ]]; then
-		setModuleMode on
-	fi
 
 	go mod vendor
 	cd - >/dev/null
@@ -63,16 +59,6 @@ getAndEnsure() {
 }
 sync() {
 	go list -m -json all
-}
-setModuleMode() {
-	modes=('off' 'on' 'auto')
-	if [[ " ${modes[*]} " == *"$1"* ]]; then
-		export GO111MODULE=$1
-		echo "export GO111MODULE=$1"
-	else
-		echo "illegal GO111MODULE [${1}]"
-		exit 1
-	fi
 }
 
 $@
