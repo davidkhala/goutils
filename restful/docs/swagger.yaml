@@ -1,0 +1,14 @@
+info:
+  contact:
+    email: david-khala@hotmail.com
+  title: go-swagger
+  version: "1.16"
+paths:
+  /ping:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+swagger: "2.0"
