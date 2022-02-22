@@ -7,6 +7,7 @@ import (
 )
 
 // Ping
+// @Router /ping [get]
 // @Success 200 {string} pong
 func Ping(c *gin.Context) {
 	c.String(http.StatusOK, "pong")
