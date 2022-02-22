@@ -1,34 +1,34 @@
 package main
 
 import (
+	"github.com/davidkhala/goutils"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func setupRouter() *gin.Engine {
-	// Disable Console Color
-	// gin.DisableConsoleColor()
-	r := gin.Default()
+// @title go-swagger
+// @version 1.16
+// @contact.email david-khala@hotmail.com
+func main() {
+	app := Run(true)
 
 	// Ping test
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
-	})
+	app.GET("/ping", Ping)
 
 	// Get user value
-	r.GET("/user/:name", func(c *gin.Context) {
+	app.GET("/user/:name", func(c *gin.Context) {
 		user := c.Params.ByName("name")
 		c.JSON(http.StatusOK, gin.H{"user": user})
 	})
 
 	// Authorized group (uses gin.BasicAuth() middleware)
 	// Same than:
-	// authorized := r.Group("/")
+	// authorized := app.Group("/")
 	// authorized.Use(gin.BasicAuth(gin.Credentials{
 	//	  "foo":  "bar",
 	//	  "manu": "123",
 	//}))
-	authorized := r.Group("/", gin.BasicAuth(gin.Accounts{
+	authorized := app.Group("/", gin.BasicAuth(gin.Accounts{
 		"foo":  "bar", // user:foo password:bar
 		"manu": "123", // user:manu password:123
 	}))
@@ -36,6 +36,5 @@ func setupRouter() *gin.Engine {
 	authorized.POST("admin", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"status": "ok"})
 	})
-
-	return r
+	goutils.PanicError(app.Run(":8080"))
 }
