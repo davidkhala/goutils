@@ -6,6 +6,11 @@ import (
 	"time"
 )
 
+func TestDirname(t *testing.T) {
+	__dirname := Which()
+	println(__dirname) // "/tmp/Goland"
+}
+
 func TestFloat(t *testing.T) {
 	var amountStr = "123456789.12"
 	var amountFloat = ParseFloat(amountStr)
