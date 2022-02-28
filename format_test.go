@@ -7,8 +7,12 @@ import (
 )
 
 func TestDirname(t *testing.T) {
-	__dirname := Which()
-	println(__dirname) // "/tmp/Goland"
+	dir, err := Dirname()
+	PanicError(err)
+	println(dir)
+	fileName, err := Filename()
+	PanicError(err)
+	println(fileName)
 }
 
 func TestFloat(t *testing.T) {
