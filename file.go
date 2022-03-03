@@ -2,6 +2,7 @@ package goutils
 
 import (
 	"errors"
+	"io/ioutil"
 	"path/filepath"
 	"runtime"
 )
@@ -22,4 +23,16 @@ func Dirname() (string, error) {
 		return "", err
 	}
 	return filepath.Dir(filename), nil
+}
+
+func ReadFile(file string) ([]byte, error) {
+	if file == "" {
+		return nil, nil
+	}
+
+	in, err := ioutil.ReadFile(file)
+	if err != nil {
+		return nil, err
+	}
+	return in, nil
 }

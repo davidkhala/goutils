@@ -3,6 +3,7 @@ package goutils
 import (
 	"fmt"
 	"github.com/golang/protobuf/ptypes/timestamp"
+	"github.com/kortschak/utter"
 	"math"
 	"testing"
 	"time"
@@ -40,4 +41,8 @@ func TestTimeStamp(t *testing.T) {
 	stamp.Seconds = now.Unix()
 	stamp.Nanos = int32(now.Nanosecond())
 	fmt.Println(stamp.Seconds, stamp.Nanos)
+}
+func TestUtter(t *testing.T) {
+	fmt.Println(Map)
+	utter.Dump(Map)
 }
