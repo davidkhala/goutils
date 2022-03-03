@@ -6,21 +6,11 @@ golang utils, it covers
  - go command utils
  - format utils
  - crypto utils
+   - EC public key encryption (refer to ethereum.ECIES but without huge vendor directory)
  - http request utils
 
 ## Prerequisite
-- golang 1.14
-
-
-## vendor tool
-- [Go Module](./vgo.md)
+- golang 1.16
 
 ## [Notes](https://github.com/davidkhala/goutils/wiki/Notes)
-## DONE
-- EC public key encryption (refer to ethereum.ECIES but without huge vendor directory)
 
-
-## TODO
-- syndtr/goleveldb
-- EC private key generate does not load string seed to io.reader: panic: unexpected EOF
-- How to fetch private Golang module in go mod vendor fashion
