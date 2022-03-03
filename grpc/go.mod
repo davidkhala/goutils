@@ -1,4 +1,4 @@
-module grpc
+module github.com/davidkhala/goutils/grpc
 
 go 1.16
 
