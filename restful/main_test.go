@@ -1,4 +1,4 @@
-package main
+package restful
 
 import (
 	"github.com/davidkhala/goutils"

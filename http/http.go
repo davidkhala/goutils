@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-// return the pointer to global config
+// GetTLSConfigGlobal return the pointer to global config
 func GetTLSConfigGlobal() (globalConfig *tls.Config) {
 	if http.DefaultTransport.(*http.Transport).TLSClientConfig == nil {
 		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{}

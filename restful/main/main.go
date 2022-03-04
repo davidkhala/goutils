@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/davidkhala/goutils"
+	"github.com/davidkhala/goutils/restful"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -10,8 +11,9 @@ import (
 // @version 1.16
 // @contact.email david-khala@hotmail.com
 func main() {
-	app := Run(true)
-	app.GET("/ping", Ping)
+	app := restful.Run(true)
+	app.GET("/ping", restful.Ping)
+	app.GET("/", restful.Ping)
 
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler)) // refers to /swagger/*any
 
