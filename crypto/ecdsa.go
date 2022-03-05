@@ -18,7 +18,7 @@ type ECPriv struct {
 }
 
 //generate an EC private key (default to use P256 curve)
-func (ECPriv) New(curve elliptic.Curve) (ECPriv) {
+func (ECPriv) New(curve elliptic.Curve) ECPriv {
 	if curve == nil {
 		curve = elliptic.P256()
 	}
@@ -45,13 +45,13 @@ func (t ECDSASignature) Marshal() []byte {
 }
 func (ECDSASignature) Unmarshal(signature []byte) (ecdsaSignature ECDSASignature) {
 	var rest, err = asn1.Unmarshal(signature, &ecdsaSignature)
-	assertEmpty(rest, "asn1 unmarshal failed")
+	AssertEmpty(rest, "asn1 unmarshal failed")
 	PanicError(err)
 	return
 }
-func (ECPriv) LoadPem(pemBytes []byte) (ECPriv) {
+func (ECPriv) LoadPem(pemBytes []byte) ECPriv {
 	block, rest := pem.Decode(pemBytes)
-	assertEmpty(rest, "pem decode failed")
+	AssertEmpty(rest, "pem decode failed")
 	privKey, err := x509.ParseECPrivateKey(block.Bytes)
 	PanicError(err)
 	return ECPriv{privKey}
@@ -76,7 +76,7 @@ func (t ECPub) Verify(digest []byte, signature []byte) bool {
 }
 func (ECPub) LoadCert(pemBytes []byte) ECPub {
 	block, rest := pem.Decode(pemBytes)
-	assertEmpty(rest, "pem decode failed")
+	AssertEmpty(rest, "pem decode failed")
 	var cert, err = x509.ParseCertificate(block.Bytes)
 	PanicError(err)
 

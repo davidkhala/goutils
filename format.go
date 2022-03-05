@@ -3,6 +3,7 @@ package goutils
 import (
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"github.com/golang/protobuf/ptypes/timestamp"
 	"math"
 	"math/rand"
@@ -150,4 +151,11 @@ func PaddingLeft(str string, length int, pad rune) string {
 
 func PaddingRight(str string, length int, pad rune) string {
 	return str + strings.Repeat(string(pad), length-len(str))
+}
+
+func AssertEmpty(rest []byte, message string) error {
+	if rest != nil && len(rest) > 0 {
+		return errors.New(message + ":" + string(rest))
+	}
+	return nil
 }

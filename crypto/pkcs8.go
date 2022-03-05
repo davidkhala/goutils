@@ -16,9 +16,9 @@ type PKCS8 struct {
 	reflect.Type
 }
 
-func (PKCS8) LoadPem(pemBytes []byte) (PKCS8) {
+func (PKCS8) LoadPem(pemBytes []byte) PKCS8 {
 	block, rest := pem.Decode(pemBytes)
-	assertEmpty(rest, "pem decode failed")
+	AssertEmpty(rest, "pem decode failed")
 	privKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)
 	PanicError(err)
 	return PKCS8{*block, privKey, reflect.TypeOf(privKey)}
