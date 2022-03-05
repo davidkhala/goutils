@@ -20,9 +20,12 @@ const docTemplate = `{
     "paths": {
         "/ping": {
             "get": {
+                "produces": [
+                    "text/plain"
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "pong",
                         "schema": {
                             "type": "string"
                         }

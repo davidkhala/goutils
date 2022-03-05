@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/davidkhala/goutils"
 	"github.com/davidkhala/goutils/restful"
+	_ "github.com/davidkhala/goutils/restful/docs"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
