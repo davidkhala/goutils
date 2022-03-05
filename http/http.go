@@ -5,8 +5,11 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	. "github.com/davidkhala/goutils"
+	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
+	"strings"
 )
 
 // GetTLSConfigGlobal return the pointer to global config
@@ -57,17 +60,19 @@ func Get(url string, client *http.Client) Response {
 	PanicError(err)
 	return Response(*resp)
 }
-
-func PostJson(url string, body interface{}, client *http.Client) Response {
-	return Post(url, "application/json", ToJson(body), client)
+func PostForm(_url string, data url.Values, client *http.Client) Response {
+	return Post(_url, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()), client)
 }
-func Post(url string, contentType string, body []byte, client *http.Client) Response {
+func PostJson(url string, body interface{}, client *http.Client) Response {
+	return Post(url, "application/json", bytes.NewBuffer(ToJson(body)), client)
+}
+func Post(url string, contentType string, body io.Reader, client *http.Client) Response {
 	var err error
 	var resp *http.Response
 	if client == nil {
-		resp, err = http.Post(url, contentType, bytes.NewBuffer(body))
+		resp, err = http.Post(url, contentType, body)
 	} else {
-		resp, err = client.Post(url, contentType, bytes.NewBuffer(body))
+		resp, err = client.Post(url, contentType, body)
 	}
 	PanicError(err)
 	return Response(*resp)
