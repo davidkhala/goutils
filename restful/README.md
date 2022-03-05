@@ -1,4 +1,4 @@
-# goutils/restful
+# github.com/davidkhala/goutils/restful
 
 
 ## Swagger Support
