@@ -54,7 +54,7 @@ func Deferred(handler DeferHandler, params ...interface{}) {
 	}
 }
 
-// unix nano
+// TimeLong unix nano
 type TimeLong int64
 
 func (_ TimeLong) FromTime(t time.Time) TimeLong {
@@ -121,7 +121,7 @@ func RandString(length int, letterBytes string) string {
 
 var HexEncode = hex.EncodeToString
 
-func HexDecode(s string) []byte {
+func HexDecodeOrPanic(s string) []byte {
 	result, err := hex.DecodeString(s)
 	PanicError(err)
 	return result
