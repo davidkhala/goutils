@@ -36,3 +36,8 @@ func ReadFile(file string) ([]byte, error) {
 	}
 	return in, nil
 }
+func ReadFileOrPanic(file string) []byte {
+	byteSlice, err := ReadFile(file)
+	PanicError(err)
+	return byteSlice
+}
