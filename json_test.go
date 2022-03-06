@@ -2,6 +2,7 @@ package goutils
 
 import (
 	"fmt"
+	"github.com/kortschak/utter"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -16,39 +17,66 @@ type TITLE struct {
 
 func TestFromJson(t *testing.T) {
 
-	type compound struct {
-		URL
-		TITLE
-	}
-	var composite compound
-	FromJson([]byte(`{  "url": "www.google.com",  "title": "Google"}`), &composite)
-	fmt.Println(composite)
-	fmt.Println(string(ToJson(composite)))
-	assert.Panics(t, func() {
-		FromJson(nil, &composite)
-	}, "should panic from nil json bytes")
+	t.Run("compond structure: case 1", func(t *testing.T) {
+		type compound struct {
+			URL
+			TITLE
+		}
+		var composite compound
+		FromJson([]byte(`{  "url": "www.google.com",  "title": "Google"}`), &composite)
+		fmt.Println(composite)
+		fmt.Println(string(ToJson(composite)))
+		assert.Panics(t, func() {
+			FromJson(nil, &composite)
+		}, "should panic from nil json bytes")
+	})
 
+	t.Run("compound structure", func(t *testing.T) {
+		type TITLE struct {
+			Title string
+		}
+		type compound struct {
+			URL
+			TITLE
+		}
+		var composite = compound{URL{"www.google.com"}, TITLE{"Google"}}
+
+		fmt.Println(composite)
+		fmt.Println(string(ToJson(composite)))
+		assert.Panics(t, func() {
+			FromJson(nil, &composite)
+		}, "should panic from nil json bytes")
+	})
 }
 func TestFromJson2(t *testing.T) {
 
-	type TITLE struct {
-		Title string
-	}
-	type compound struct {
-		URL
-		TITLE
-	}
-	var composite = compound{URL{"www.google.com"}, TITLE{"Google"}}
-
-	fmt.Println(composite)
-	fmt.Println(string(ToJson(composite)))
-	assert.Panics(t, func() {
-		FromJson(nil, &composite)
-	}, "should panic from nil json bytes")
-
+	t.Run("json array", func(t *testing.T) {
+		var arr []string
+		FromJson([]byte(`["whoami"]`), &arr)
+		utter.Dump(arr)
+	})
 }
+
 func TestToJson(t *testing.T) {
-	var urls = []URL{{"www.google.com"}, {"facebook"}}
-	var jsonBytes = ToJson(urls)
-	fmt.Println(string(jsonBytes))
+	t.Run("url array", func(t *testing.T) {
+		var urls = []URL{{"www.google.com"}, {"facebook"}}
+		var jsonBytes = ToJson(urls)
+		fmt.Println(string(jsonBytes))
+	})
+	t.Run("string array", func(t *testing.T) {
+		var stringArray = []string{
+			"whoami",
+		}
+		var jsonBytes = ToJson(stringArray)
+		fmt.Println(string(jsonBytes))
+	})
+	t.Run("without structure", func(t *testing.T) {
+		var obj = map[string]interface{}{
+			"a": 1,
+			"b": "buffer",
+		}
+		var jsonBytes = ToJson(obj)
+		fmt.Println(string(jsonBytes))
+	})
+
 }
