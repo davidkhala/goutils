@@ -78,5 +78,18 @@ func TestToJson(t *testing.T) {
 		var jsonBytes = ToJson(obj)
 		fmt.Println(string(jsonBytes))
 	})
+	t.Run("auto loading", func(t *testing.T) {
+		var _map = map[string]string{
+			"a": Base64Encode([]byte("b1234")),
+			"c": Base64Encode([]byte("d1234")),
+		}
+		var byteMap = map[string][]byte{}
+		var _json = ToJson(_map)
+		FromJson(_json, &byteMap)
+		utter.Dump(byteMap)
+		for _, value := range byteMap {
+			println(string(value))
+		}
+	})
 
 }

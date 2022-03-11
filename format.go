@@ -1,6 +1,7 @@
 package goutils
 
 import (
+	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -78,9 +79,7 @@ func (t TimeLong) String() string {
 	return strconv.FormatInt(int64(t), 10)
 }
 
-/**
-a wrapper to panic Unmarshal(non-pointer v)
-*/
+// FromJson a wrapper to panic Unmarshal(non-pointer v)
 func FromJson(jsonString []byte, v interface{}) {
 	err := json.Unmarshal(jsonString, v)
 	PanicError(err)
@@ -92,7 +91,7 @@ func ToJson(v interface{}) []byte {
 	return result
 }
 
-//not thread safe
+// RandString not thread safe
 func RandString(length int, letterBytes string) string {
 	var src = rand.NewSource(time.Now().UnixNano())
 	if letterBytes == "" {
@@ -117,6 +116,14 @@ func RandString(length int, letterBytes string) string {
 	}
 
 	return string(b)
+}
+
+var Base64Encode = base64.StdEncoding.EncodeToString
+
+func Base64DecodeOrPanic(s string) []byte {
+	result, err := base64.StdEncoding.DecodeString(s)
+	PanicError(err)
+	return result
 }
 
 var HexEncode = hex.EncodeToString
