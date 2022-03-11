@@ -58,18 +58,18 @@ func Deferred(handler DeferHandler, params ...interface{}) {
 // TimeLong unix nano
 type TimeLong int64
 
-func (_ TimeLong) FromTime(t time.Time) TimeLong {
+func (TimeLong) FromTime(t time.Time) TimeLong {
 	return TimeLong(t.UnixNano())
 }
-func (_ TimeLong) FromTimeStamp(t timestamp.Timestamp) TimeLong {
+func (TimeLong) FromTimeStamp(t timestamp.Timestamp) TimeLong {
 	return TimeLong(t.GetSeconds()*int64(time.Second) + int64(t.GetNanos()))
 }
-func (_ TimeLong) FromString(s string) TimeLong {
+func (TimeLong) FromString(s string) TimeLong {
 	i, err := strconv.ParseInt(s, 10, 64)
 	PanicError(err)
 	return TimeLong(i)
 }
-func (_ TimeLong) FromUnixMilliSecond(t int64) TimeLong {
+func (TimeLong) FromUnixMilliSecond(t int64) TimeLong {
 	return TimeLong(t * int64(time.Millisecond))
 }
 func (t TimeLong) UnixMilliSecond() int64 {
