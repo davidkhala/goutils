@@ -1,24 +1,17 @@
 package logger
 
 import (
-	"github.com/davidkhala/goutils"
-	"github.com/sirupsen/logrus"
+	"github.com/rs/zerolog"
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
+	"os"
 )
 
-func SetupLogrus() *logrus.Logger {
-	logrus.SetFormatter(&logrus.TextFormatter{
-		ForceColors:   true,
-		FullTimestamp: true,
-	})
-	logrus.SetLevel(logrus.DebugLevel)
-	return logrus.StandardLogger()
-}
 func Zap() *zap.Logger {
-	config := zap.NewDevelopmentConfig()
-	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
-	logger, err := config.Build()
-	goutils.PanicError(err)
-	return logger
+	return zap.NewExample()
+}
+func ZeroLog() zerolog.Logger {
+	// UNIX Time is faster and smaller than most timestamps
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+
+	return zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout})
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/golang/protobuf/ptypes/timestamp"
 	"github.com/kortschak/utter"
+	"github.com/stretchr/testify/assert"
 	"math"
 	"testing"
 	"time"
@@ -45,4 +46,9 @@ func TestTimeStamp(t *testing.T) {
 func TestUtter(t *testing.T) {
 	fmt.Println(Map)
 	utter.Dump(Map)
+}
+func TestNil(t *testing.T) {
+	var arrays []string
+	arrays = nil
+	assert.Equal(t, 0, len(arrays))
 }

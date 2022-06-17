@@ -1,4 +1,5 @@
 # logger collection
 - `go.uber.org/zap`
-- `github.com/sirupsen/logrus` (maintain mode)
+- `github.com/rs/zerolog`
+- ~~`github.com/sirupsen/logrus`~~: Deprecated and removed
   
