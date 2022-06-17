@@ -9,7 +9,8 @@ func TestZap(t *testing.T) {
 	logger.Debug("abc")
 }
 func TestZeroLog(t *testing.T) {
-	var logger = ZeroLog()
+	var f ZeroLogFormatter
+	var logger = ZeroLog(f.String)
 
 	logger.Info().Msg("hello world")
 }
