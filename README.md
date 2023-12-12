@@ -1,6 +1,5 @@
 # go-utils
- 
-![Github Actions](https://github.com/davidkhala/goutils/workflows/Github%20Actions/badge.svg)
+
 
 golang utils, it covers
  - go command utils
