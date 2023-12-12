@@ -2,9 +2,9 @@ package goutils
 
 import (
 	"fmt"
-	"github.com/golang/protobuf/ptypes/timestamp"
 	"github.com/kortschak/utter"
 	"github.com/stretchr/testify/assert"
+	timestamp "google.golang.org/protobuf/types/known/timestamppb"
 	"math"
 	"testing"
 	"time"
