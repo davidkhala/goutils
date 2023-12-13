@@ -20,12 +20,12 @@ func TestRange(t *testing.T) {
 }
 func TestMap2JSON(t *testing.T) {
 	Map["abc"] = "2"
-	fmt.Println(string(ToJson(Map)))
+	assert.Equal(t, `{"abc":"2"}`, string(ToJson(Map)))
 }
 func TestInf(t *testing.T) {
 	var positiveInf = math.Inf(1)
-	fmt.Println(positiveInf)
-	fmt.Println(1.00-positiveInf < 0)
+	assert.Equal(t, "+Inf", fmt.Sprint(positiveInf))
+	assert.True(t, 1.00-positiveInf < 0)
 
 }
 func TestSlice(t *testing.T) {

@@ -1,0 +1,21 @@
+name: "go module test"
+on: push
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - run: go mod vendor
+      - run: go test
+  extensions:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        extension: [grpc, logger, leveldb, restful]
+    defaults:
+      run:
+        working-directory: ${{matrix.extension}}
+    steps:
+      - uses: actions/checkout@main
+      - run: go mod vendor
+      - run: go test

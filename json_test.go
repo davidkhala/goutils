@@ -2,6 +2,7 @@ package goutils
 
 import (
 	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/kortschak/utter"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -53,7 +54,7 @@ func TestFromJson2(t *testing.T) {
 	t.Run("json array", func(t *testing.T) {
 		var arr []string
 		FromJson([]byte(`["whoami"]`), &arr)
-		utter.Dump(arr)
+		assert.Equal(t, `[whoami]`, spew.Sprint(arr))
 	})
 }
 

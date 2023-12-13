@@ -1,4 +1,4 @@
-name: Github Actions
+name: scripts tests
 # This workflow is triggered on pushes to the repository.
 on: push
 
@@ -11,13 +11,13 @@ jobs:
         run: go version
       - run: ./scripts/goCmd.sh get github.com/davidkhala/chaincode
       - name: cleanup
-        run: export GOPATH=$(go env GOPATH); rm -rf ${GOPATH}/src/github.com/davidkhala/chaincode/; 
+        run: export GOPATH=$(go env GOPATH); rm -rf ${GOPATH}/src/github.com/davidkhala/chaincode/;
       - run: ./scripts/goCmd.sh get https://github.com/davidkhala/chaincode
       - name: cleanup
-        run: export GOPATH=$(go env GOPATH); rm -rf ${GOPATH}/src/github.com/davidkhala/chaincode/; 
+        run: export GOPATH=$(go env GOPATH); rm -rf ${GOPATH}/src/github.com/davidkhala/chaincode/;
       - run: ./scripts/goCmd.sh get https://github.com/davidkhala/chaincode.git
       - name: duplicate test
         run: ./scripts/goCmd.sh get github.com/davidkhala/chaincode
       - name: cleanup
-        run: export GOPATH=$(go env GOPATH); rm -rf ${GOPATH}/src/github.com/davidkhala/chaincode/; 
+        run: export GOPATH=$(go env GOPATH); rm -rf ${GOPATH}/src/github.com/davidkhala/chaincode/;
       - run: ./scripts/goCmd.sh get github.com/davidkhala/chaincode release-1.4
