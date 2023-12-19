@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	timestamp "google.golang.org/protobuf/types/known/timestamppb"
 	"math"
 	"math/rand"
 	"strconv"
@@ -60,9 +59,6 @@ type TimeLong int64
 
 func (TimeLong) FromTime(t time.Time) TimeLong {
 	return TimeLong(t.UnixNano())
-}
-func (TimeLong) FromTimeStamp(t timestamp.Timestamp) TimeLong {
-	return TimeLong(t.GetSeconds()*int64(time.Second) + int64(t.GetNanos()))
 }
 func (TimeLong) FromString(s string) TimeLong {
 	i, err := strconv.ParseInt(s, 10, 64)
