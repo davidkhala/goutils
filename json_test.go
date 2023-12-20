@@ -2,7 +2,6 @@ package goutils
 
 import (
 	"fmt"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/kortschak/utter"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -48,13 +47,10 @@ func TestFromJson(t *testing.T) {
 			FromJson(nil, &composite)
 		}, "should panic from nil json bytes")
 	})
-}
-func TestFromJson2(t *testing.T) {
-
 	t.Run("json array", func(t *testing.T) {
 		var arr []string
 		FromJson([]byte(`["whoami"]`), &arr)
-		assert.Equal(t, `[whoami]`, spew.Sprint(arr))
+		assert.Equal(t, `[whoami]`, fmt.Sprint(arr))
 	})
 }
 
@@ -64,6 +60,12 @@ func TestToJson(t *testing.T) {
 		var jsonBytes = ToJson(urls)
 		fmt.Println(string(jsonBytes))
 	})
+
+	t.Run("map2json", func(t *testing.T) {
+		Map["abc"] = "2"
+		assert.Equal(t, `{"abc":"2"}`, string(ToJson(Map)))
+	})
+
 	t.Run("string array", func(t *testing.T) {
 		var stringArray = []string{
 			"whoami",
