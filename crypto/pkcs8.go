@@ -9,7 +9,7 @@ import (
 	"reflect"
 )
 
-//default in nodejs sdk
+// PKCS8 default in nodejs sdk
 type PKCS8 struct {
 	pem.Block
 	Key interface{}
