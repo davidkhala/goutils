@@ -12,7 +12,7 @@ import (
 // @version 1.16
 // @contact.email david-khala@hotmail.com
 func main() {
-	app := restful.Run(true)
+	app := restful.App(true)
 	app.GET("/ping", restful.Ping)
 	app.GET("/", restful.Ping)
 

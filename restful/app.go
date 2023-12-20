@@ -14,7 +14,7 @@ func Ping(c *gin.Context) {
 	c.String(http.StatusOK, "pong")
 }
 
-func Run(coloredConsole bool) *gin.Engine {
+func App(coloredConsole bool) *gin.Engine {
 	var ci string
 	ci = os.Getenv("CI")
 	switch ci {
