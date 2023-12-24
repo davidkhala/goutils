@@ -30,7 +30,13 @@ func ParseCertPemOrPanic(pemBytes []byte) *x509.Certificate {
 	return cert
 }
 
-// Get the DN (distinguished name) associated with a pkix.Name.
+func ToCertPem(cert *x509.Certificate) []byte {
+	derBytes, err := x509.MarshalPKIXPublicKey(cert.PublicKey)
+	PanicError(err)
+	return pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: derBytes})
+}
+
+// GetDN Get the DN (distinguished name) associated with a pkix.Name.
 // NOTE: This code is almost a direct copy of the String() function in
 // https://go-review.googlesource.com/c/go/+/67270/1/src/crypto/x509/pkix/pkix.go#26
 // which returns a DN as defined by RFC 2253.
