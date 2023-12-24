@@ -41,3 +41,6 @@ func TestNil(t *testing.T) {
 	arrays = nil
 	assert.Equal(t, 0, len(arrays))
 }
+func TestPath(t *testing.T) {
+	fmt.Println(HomeResolve("delphi-fabric", "config"))
+}
