@@ -17,3 +17,10 @@ func GetType(object interface{}) string {
 		return t.Name()
 	}
 }
+func Map[T, V any](array []T, fn func(T) V) []V {
+	result := make([]V, len(array))
+	for i, t := range array {
+		result[i] = fn(t)
+	}
+	return result
+}
