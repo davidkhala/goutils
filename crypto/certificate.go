@@ -31,9 +31,7 @@ func ParseCertPemOrPanic(pemBytes []byte) *x509.Certificate {
 }
 
 func ToCertPem(cert *x509.Certificate) []byte {
-	derBytes, err := x509.MarshalPKIXPublicKey(cert.PublicKey)
-	PanicError(err)
-	return pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: derBytes})
+	return pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: cert.Raw})
 }
 
 // GetDN Get the DN (distinguished name) associated with a pkix.Name.
