@@ -1,0 +1,10 @@
+go 1.21
+
+use (
+	.
+	grpc
+	leveldb
+	logger
+	restful
+	orm
+)

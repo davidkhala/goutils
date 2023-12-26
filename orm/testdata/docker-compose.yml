@@ -1,0 +1,10 @@
+name: postgres
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      # Use postgres/example as user/password credentials
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
