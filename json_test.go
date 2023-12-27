@@ -62,8 +62,11 @@ func TestToJson(t *testing.T) {
 	})
 
 	t.Run("map2json", func(t *testing.T) {
-		Map["abc"] = "2"
-		assert.Equal(t, `{"abc":"2"}`, string(ToJson(Map)))
+		var _map = map[string]string{
+			"abc": "2",
+		}
+
+		assert.Equal(t, `{"abc":"2"}`, string(ToJson(_map)))
 	})
 
 	t.Run("string array", func(t *testing.T) {
@@ -93,6 +96,26 @@ func TestToJson(t *testing.T) {
 		for _, value := range byteMap {
 			println(string(value))
 		}
+	})
+	t.Run("handler pointer", func(t *testing.T) {
+		type Version struct {
+			BlockNum uint64 `protobuf:"varint,1,opt,name=block_num,json=blockNum,proto3" json:"block_num,omitempty"`
+			TxNum    uint64 `protobuf:"varint,2,opt,name=tx_num,json=txNum,proto3" json:"tx_num,omitempty"`
+		}
+		type KVRead struct {
+			Key     string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+			Version *Version `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
+		}
+		type KVRWSet struct {
+			Reads []*KVRead `protobuf:"bytes,1,rep,name=reads,proto3" json:"reads,omitempty"`
+		}
+		var KVRead_1 KVRead
+		KVRead_1.Key = "hub"
+		KVRead_1.Version = &Version{TxNum: 123, BlockNum: 2}
+		var rwset = KVRWSet{Reads: []*KVRead{
+			&KVRead_1,
+		}}
+		fmt.Printf("%s", ToJson(rwset))
 	})
 
 }

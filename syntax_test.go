@@ -7,11 +7,12 @@ import (
 	"testing"
 )
 
-var Map = map[string]string{}
-
 func TestRange(t *testing.T) {
-	Map["abc"] = "1"
-	for key, value := range Map {
+	var _map = map[string]string{
+		"abc": "1",
+	}
+
+	for key, value := range _map {
 		fmt.Println(key, value)
 	}
 }
