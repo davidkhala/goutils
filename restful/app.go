@@ -35,3 +35,16 @@ func App(coloredConsole bool) *gin.Engine {
 
 	return r
 }
+
+func SetContext(data map[string]any, app *gin.Engine) gin.HandlerFunc {
+	var interceptor = func(context *gin.Context) {
+		for key, value := range data {
+			context.Set(key, value)
+		}
+	}
+	if app != nil {
+		app.Use(interceptor)
+	}
+	return interceptor
+
+}
