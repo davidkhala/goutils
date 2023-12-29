@@ -19,3 +19,8 @@ func PrintError(err error) {
 	var _, printErr = fmt.Printf("%+v\n\n", err)
 	PanicError(printErr)
 }
+func AssertNil(i any, message string) {
+	if i != nil {
+		panic(message)
+	}
+}

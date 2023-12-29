@@ -2,6 +2,7 @@ package goutils
 
 import (
 	"errors"
+	"github.com/stretchr/testify/assert"
 	"runtime/debug"
 	"testing"
 )
@@ -18,4 +19,11 @@ func TestPanicError(t *testing.T) {
 
 	PanicError(err)
 
+}
+func TestAssert(t *testing.T) {
+	AssertNil(nil, "should be OK")
+	var msg = "should be nil"
+	assert.PanicsWithValue(t, msg, func() {
+		AssertNil("non-nil", msg)
+	})
 }
