@@ -3,6 +3,7 @@ package goutils
 import (
 	"errors"
 	"fmt"
+	"reflect"
 )
 
 func PanicString(err string) {
@@ -20,7 +21,14 @@ func PrintError(err error) {
 	PanicError(printErr)
 }
 func AssertNil(i any, message string) {
-	if i != nil {
+	//refer: https://glucn.medium.com/golang-an-interface-holding-a-nil-value-is-not-nil-bb151f472cc7
+	var ok = false
+	if reflect.ValueOf(i).Kind() == reflect.Ptr {
+		ok = reflect.ValueOf(i).IsNil()
+	} else if i == nil {
+		ok = true
+	}
+	if !ok {
 		panic(message)
 	}
 }

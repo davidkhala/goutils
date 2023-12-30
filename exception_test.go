@@ -21,6 +21,10 @@ func TestPanicError(t *testing.T) {
 
 }
 func TestAssert(t *testing.T) {
+	type localType struct {
+	}
+	var nPointer *localType
+	AssertNil(nPointer, "should be OK")
 	AssertNil(nil, "should be OK")
 	var msg = "should be nil"
 	assert.PanicsWithValue(t, msg, func() {
