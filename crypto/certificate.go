@@ -23,9 +23,7 @@ func ParseCertPem(pemBytes []byte) (*x509.Certificate, error) {
 	return cert, nil
 }
 func ParseCertPemOrPanic(pemBytes []byte) *x509.Certificate {
-	block, rest := pem.Decode(pemBytes)
-	PanicError(AssertEmpty(rest, "pem decode failed"))
-	cert, err := x509.ParseCertificate(block.Bytes)
+	cert, err := ParseCertPem(pemBytes)
 	PanicError(err)
 	return cert
 }

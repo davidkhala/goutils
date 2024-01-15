@@ -8,7 +8,7 @@ import (
 )
 
 func TestECPub_Encrypt(t *testing.T) {
-	var dsaPriv = ECPriv{}.New(nil)
+	var dsaPriv = NewECPriv(nil)
 	var rawData = []byte("david secret")
 	var ecPub = ECPub{&dsaPriv.PublicKey}
 	var cipher2 = ecPub.Encrypt(rand.Reader, rawData)

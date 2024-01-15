@@ -30,14 +30,14 @@ pJpGegIgRHIxIvDzKUpVFK7hSO8dMRiaS+6iwZl25Pi7sb5Zn54=
 `
 
 func TestECDSAPriv_ToPem(t *testing.T) {
-	var dsaObj = ECPriv{}.New(nil)
+	var dsaObj = NewECPriv(nil)
 	var pemBytes = dsaObj.ToPem()
 	fmt.Println(string(pemBytes))
 	dsaObj = ECPriv{}.LoadPem(pemBytes)
 	fmt.Println(string(dsaObj.ToPem()))
 }
 func TestECDSAPriv_Sign(t *testing.T) {
-	var dsaObj = ECPriv{}.New(nil)
+	var dsaObj = NewECPriv(nil)
 	var rawData = []byte("david secret")
 	var signature = dsaObj.Sign(rawData)
 	fmt.Println("signature is time variant", goutils.HexEncode(signature))
@@ -51,7 +51,8 @@ func TestECDSAPriv_LoadPKCS8Pem(t *testing.T) {
 	var rawObj = pkcs8Obj.FormatECDSA()
 	var dsaObj = ECPriv{rawObj}
 
-	var dsapubObj = ECPub{}.LoadCert([]byte(testPubPem))
+	var dsapubObj = ECPub{}
+	dsapubObj.LoadCert([]byte(testPubPem))
 	var digest = []byte("anytest")
 	var signature = dsaObj.Sign(digest)
 	var isRight = dsapubObj.Verify(digest, signature)

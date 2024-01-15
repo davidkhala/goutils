@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
-	"errors"
+	"fmt"
 	"math"
 	"math/rand"
 	"strconv"
@@ -156,9 +156,15 @@ func PaddingRight(str string, length int, pad rune) string {
 	return str + strings.Repeat(string(pad), length-len(str))
 }
 
-func AssertEmpty(rest []byte, message string) error {
-	if rest != nil && len(rest) > 0 {
-		return errors.New(message + ":" + string(rest))
+func AssertEmpty[T any](rest []T, message string) error {
+	if !IsEmpty[T](rest) {
+		return fmt.Errorf("%s:%s", message, rest)
 	}
 	return nil
+}
+func AssertEmptyOrPanic[T any](rest []T, message string) {
+	PanicError(AssertEmpty[T](rest, message))
+}
+func IsEmpty[T any](arr []T) bool {
+	return arr == nil || len(arr) == 0
 }

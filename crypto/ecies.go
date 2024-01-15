@@ -1,4 +1,3 @@
-//ECDH , inspired by go-ethereum
 package crypto
 
 import (
@@ -18,6 +17,7 @@ import (
 	"strconv"
 )
 
+// ECIESParams ECDH , inspired by go-ethereum
 type ECIESParams struct {
 	Hash      func() hash.Hash // hash function
 	hashAlgo  crypto.Hash
@@ -26,8 +26,7 @@ type ECIESParams struct {
 	KeyLen    int                                // length of symmetric key
 }
 
-// symDecrypt carries out CTR decryption using the block cipher specified in
-// the parameters
+// SymDecrypt carries out CTR decryption using the block cipher specified in the parameters
 func (params ECIESParams) SymDecrypt(key, cipherText []byte) (m []byte) {
 	c, err := params.Cipher(key)
 	PanicError(err)
@@ -39,8 +38,7 @@ func (params ECIESParams) SymDecrypt(key, cipherText []byte) (m []byte) {
 	return
 }
 
-// symEncrypt carries out CTR encryption using the block cipher specified in the
-// parameters.
+// SymEncrypt carries out CTR encryption using the block cipher specified in the parameters.
 func (params ECIESParams) SymEncrypt(rand io.Reader, key, m []byte) (cipherText []byte) {
 	c, err := params.Cipher(key)
 	PanicError(err)
@@ -173,16 +171,16 @@ func messageTag(hash func() hash.Hash, km, msg []byte) []byte {
 func (pub ECPub) Encrypt(rand io.Reader, m []byte) (ct []byte) {
 	params := ParamsFromCurve(pub.Curve)
 
-	var newPriv = ECPriv{}.New(pub.Curve)
+	var newPriv = NewECPriv(pub.Curve)
 
-	hash := params.Hash()
+	h := params.Hash()
 	z := newPriv.GenerateShared(pub, params.KeyLen, params.KeyLen)
-	K := concatKDF(hash, z, params.KeyLen+params.KeyLen)
+	K := concatKDF(h, z, params.KeyLen+params.KeyLen)
 	Ke := K[:params.KeyLen]
 	Km := K[params.KeyLen:]
-	hash.Write(Km)
-	Km = hash.Sum(nil)
-	hash.Reset()
+	h.Write(Km)
+	Km = h.Sum(nil)
+	h.Reset()
 
 	cipherText := params.SymEncrypt(rand, Ke, m)
 	if len(cipherText) <= params.BlockSize {
@@ -191,7 +189,7 @@ func (pub ECPub) Encrypt(rand io.Reader, m []byte) (ct []byte) {
 
 	d := messageTag(params.Hash, Km, cipherText)
 
-	Rb := elliptic.Marshal(pub.Curve, newPriv.PublicKey.X, newPriv.PublicKey.Y)
+	Rb := elliptic.Marshal(pub.Curve, newPriv.PublicKey.X, newPriv.PublicKey.Y) // TODO This is deprecated
 	ct = make([]byte, len(Rb)+len(cipherText)+len(d))
 	copy(ct, Rb)
 	copy(ct[len(Rb):], cipherText)
@@ -206,11 +204,11 @@ func (prv ECPriv) Decrypt(c []byte) []byte {
 	}
 	var ecPub = ECPub{&prv.PublicKey}
 	params := ParamsFromCurve(ecPub.Curve)
-	hash := params.Hash()
+	h := params.Hash()
 
 	var (
 		rLen   int
-		hLen   = hash.Size()
+		hLen   = h.Size()
 		mStart int
 		mEnd   int
 	)
@@ -230,20 +228,20 @@ func (prv ECPriv) Decrypt(c []byte) []byte {
 
 	R := &ecdsa.PublicKey{}
 	R.Curve = ecPub.Curve
-	R.X, R.Y = elliptic.Unmarshal(R.Curve, c[:rLen])
+	R.X, R.Y = elliptic.Unmarshal(R.Curve, c[:rLen]) // TODO This is deprecated
 	if R.X == nil {
 		PanicString("ecies: invalid public key: point not on curve")
 	}
 
 	z := prv.GenerateShared(ECPub{R}, params.KeyLen, params.KeyLen)
 
-	K := concatKDF(hash, z, params.KeyLen+params.KeyLen)
+	K := concatKDF(h, z, params.KeyLen+params.KeyLen)
 
 	Ke := K[:params.KeyLen]
 	Km := K[params.KeyLen:]
-	hash.Write(Km)
-	Km = hash.Sum(nil)
-	hash.Reset()
+	h.Write(Km)
+	Km = h.Sum(nil)
+	h.Reset()
 
 	d := messageTag(params.Hash, Km, c[mStart:mEnd])
 	if subtle.ConstantTimeCompare(c[mEnd:], d) != 1 {

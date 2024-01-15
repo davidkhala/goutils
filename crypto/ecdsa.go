@@ -12,13 +12,13 @@ import (
 	"math/big"
 )
 
-//Used for both ECDSA and ECDH
+// ECPriv Used for both ECDSA and ECDH
 type ECPriv struct {
 	*ecdsa.PrivateKey
 }
 
-//generate an EC private key (default to use P256 curve)
-func (ECPriv) New(curve elliptic.Curve) ECPriv {
+// NewECPriv generate an EC private key (default to use P256 curve)
+func NewECPriv(curve elliptic.Curve) ECPriv {
 	if curve == nil {
 		curve = elliptic.P256()
 	}
@@ -31,27 +31,27 @@ func (t ECPriv) Sign(digest []byte) []byte {
 	var r, s, err = ecdsa.Sign(rand.Reader, t.PrivateKey, digest)
 
 	PanicError(err)
-	return ECDSASignature{r, s}.Marshal()
+	return ECDSASignature{r, s}.MarshalOrPanic()
 }
 
 type ECDSASignature struct {
 	R, S *big.Int
 }
 
-func (t ECDSASignature) Marshal() []byte {
+func (t ECDSASignature) MarshalOrPanic() []byte {
 	var result, err = asn1.Marshal(t)
 	PanicError(err)
 	return result
 }
-func (ECDSASignature) Unmarshal(signature []byte) (ecdsaSignature ECDSASignature) {
+func (ECDSASignature) UnmarshalOrPanic(signature []byte) (ecdsaSignature ECDSASignature) {
 	var rest, err = asn1.Unmarshal(signature, &ecdsaSignature)
-	AssertEmpty(rest, "asn1 unmarshal failed")
 	PanicError(err)
+	AssertEmptyOrPanic[byte](rest, "asn1 unmarshal failed")
 	return
 }
 func (ECPriv) LoadPem(pemBytes []byte) ECPriv {
 	block, rest := pem.Decode(pemBytes)
-	AssertEmpty(rest, "pem decode failed")
+	AssertEmptyOrPanic[byte](rest, "pem decode failed")
 	privKey, err := x509.ParseECPrivateKey(block.Bytes)
 	PanicError(err)
 	return ECPriv{privKey}
@@ -65,21 +65,16 @@ func (t ECPriv) ToPem() []byte {
 	return writer.Bytes()
 }
 
-// PublicKey is a representation of an elliptic curve public key.
+// ECPub is a representation of an elliptic curve public key.
 type ECPub struct {
 	*ecdsa.PublicKey
 }
 
 func (t ECPub) Verify(digest []byte, signature []byte) bool {
-	var ecdsaSignature = ECDSASignature{}.Unmarshal(signature)
+	var ecdsaSignature = ECDSASignature{}.UnmarshalOrPanic(signature)
 	return ecdsa.Verify(t.PublicKey, digest, ecdsaSignature.R, ecdsaSignature.S)
 }
-func (ECPub) LoadCert(pemBytes []byte) ECPub {
-	block, rest := pem.Decode(pemBytes)
-	AssertEmpty(rest, "pem decode failed")
-	var cert, err = x509.ParseCertificate(block.Bytes)
-	PanicError(err)
-
-	var pubkey = cert.PublicKey.(*ecdsa.PublicKey)
-	return ECPub{pubkey}
+func (t *ECPub) LoadCert(pemBytes []byte) {
+	var cert = ParseCertPemOrPanic(pemBytes)
+	t.PublicKey = cert.PublicKey.(*ecdsa.PublicKey)
 }
