@@ -22,10 +22,10 @@ func NewECPriv(curve elliptic.Curve) ECPriv {
 	if curve == nil {
 		curve = elliptic.P256()
 	}
-	priv, err := ecdsa.GenerateKey(curve, rand.Reader)
+	privateKey, err := ecdsa.GenerateKey(curve, rand.Reader)
 	PanicError(err)
 
-	return ECPriv{priv}
+	return ECPriv{privateKey}
 }
 func (t ECPriv) Sign(digest []byte) []byte {
 	var r, s, err = ecdsa.Sign(rand.Reader, t.PrivateKey, digest)
@@ -52,16 +52,17 @@ func (ECDSASignature) UnmarshalOrPanic(signature []byte) (ecdsaSignature ECDSASi
 func (ECPriv) LoadPem(pemBytes []byte) ECPriv {
 	block, rest := pem.Decode(pemBytes)
 	AssertEmptyOrPanic[byte](rest, "pem decode failed")
-	privKey, err := x509.ParseECPrivateKey(block.Bytes)
+	privateKey, err := x509.ParseECPrivateKey(block.Bytes)
 	PanicError(err)
-	return ECPriv{privKey}
+	return ECPriv{privateKey}
 }
 
 func (t ECPriv) ToPem() []byte {
 	writer := bytes.NewBufferString("")
 	keyBytes, err := x509.MarshalECPrivateKey(t.PrivateKey)
 	PanicError(err)
-	pem.Encode(writer, &pem.Block{Type: "EC PRIVATE KEY", Bytes: keyBytes})
+	err = pem.Encode(writer, &pem.Block{Type: "EC PRIVATE KEY", Bytes: keyBytes})
+	PanicError(err)
 	return writer.Bytes()
 }
 
