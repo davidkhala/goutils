@@ -10,20 +10,10 @@ import (
 	. "github.com/davidkhala/goutils"
 )
 
-func ParseCertPem(pemBytes []byte) (*x509.Certificate, error) {
-	block, rest := pem.Decode(pemBytes)
-	err := AssertEmpty(rest, "pem decode failed")
-	if err != nil {
-		return nil, err
-	}
-	cert, err := x509.ParseCertificate(block.Bytes)
-	if err != nil {
-		return nil, err
-	}
-	return cert, nil
-}
 func ParseCertPemOrPanic(pemBytes []byte) *x509.Certificate {
-	cert, err := ParseCertPem(pemBytes)
+	block, rest := pem.Decode(pemBytes)
+	AssertEmpty(rest, "pem decode failed")
+	cert, err := x509.ParseCertificate(block.Bytes)
 	PanicError(err)
 	return cert
 }

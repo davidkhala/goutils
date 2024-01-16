@@ -46,12 +46,12 @@ func (t ECDSASignature) MarshalOrPanic() []byte {
 func (ECDSASignature) UnmarshalOrPanic(signature []byte) (ecdsaSignature ECDSASignature) {
 	var rest, err = asn1.Unmarshal(signature, &ecdsaSignature)
 	PanicError(err)
-	AssertEmptyOrPanic[byte](rest, "asn1 unmarshal failed")
+	AssertEmpty[byte](rest, "asn1 unmarshal failed")
 	return
 }
 func (ECPriv) LoadPem(pemBytes []byte) ECPriv {
 	block, rest := pem.Decode(pemBytes)
-	AssertEmptyOrPanic[byte](rest, "pem decode failed")
+	AssertEmpty[byte](rest, "pem decode failed")
 	privateKey, err := x509.ParseECPrivateKey(block.Bytes)
 	PanicError(err)
 	return ECPriv{privateKey}
