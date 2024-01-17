@@ -27,6 +27,16 @@ func AssertNil(i any, message string) {
 		ok = reflect.ValueOf(i).IsNil()
 	} else if i == nil {
 		ok = true
+	} else {
+
+		switch i.(type) {
+		case string:
+			ok = len(i.(string)) == 0
+		default:
+			// To take care slice and map
+			ok = reflect.ValueOf(i).IsNil()
+		}
+
 	}
 	if !ok {
 		panic(message)
