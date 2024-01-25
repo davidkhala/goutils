@@ -3,10 +3,14 @@ module github.com/davidkhala/goutils
 go 1.20
 
 require (
-	github.com/kortschak/utter v1.5.0
 	github.com/spf13/viper v1.18.1
-	github.com/stretchr/testify v1.8.4
 	google.golang.org/protobuf v1.31.0
+)
+
+require (
+	// devDependencies
+	github.com/kortschak/utter v1.5.0
+	github.com/stretchr/testify v1.8.4
 )
 
 require (
