@@ -6,16 +6,25 @@ import (
 	"encoding/asn1"
 	"encoding/hex"
 	"encoding/pem"
+	"errors"
 	"fmt"
 	. "github.com/davidkhala/goutils"
 )
 
 func ParseCertPemOrPanic(pemBytes []byte) *x509.Certificate {
-	block, rest := pem.Decode(pemBytes)
-	AssertEmpty(rest, "pem decode failed")
-	cert, err := x509.ParseCertificate(block.Bytes)
+	cert, err := ParseCertPem(pemBytes)
 	PanicError(err)
 	return cert
+}
+
+// ParseCertPem used in server app
+func ParseCertPem(pemBytes []byte) (cert *x509.Certificate, err error) {
+	block, rest := pem.Decode(pemBytes)
+	if !IsEmpty[byte](rest) {
+		err = errors.New("pem decode failed")
+		return
+	}
+	return x509.ParseCertificate(block.Bytes)
 }
 
 func ToCertPem(cert *x509.Certificate) []byte {
