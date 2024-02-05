@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"math"
 	"math/rand"
 	"strconv"
@@ -39,17 +40,28 @@ func RoundFloat(num float64, precision int) float64 {
 	return float64(round(num*output)) / output
 }
 
-type DeferHandler func(errString string, params ...interface{}) (success bool)
+type DeferHandler func(err error, params ...interface{}) (success bool)
 
 func Deferred(handler DeferHandler, params ...interface{}) {
-	err := recover()
-	if err == nil {
-		return
+	recovered := recover()
+
+	var err error
+	switch recovered.(type) {
+	case error:
+		err = recovered.(error)
+	case string:
+		err = errors.New(recovered.(string))
+	default:
+		if recovered == nil {
+			return
+		} else {
+			panic(recovered)
+		}
 	}
-	var errString = err.(error).Error()
-	var success = handler(errString, params...)
+
+	var success = handler(err, params...)
 	if !success {
-		panic(err)
+		panic(recovered)
 	}
 }
 

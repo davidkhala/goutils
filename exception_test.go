@@ -7,18 +7,38 @@ import (
 	"testing"
 )
 
-var err = errors.New("any")
-
 func TestPanicError(t *testing.T) {
-	var handler = func(errString string, params ...interface{}) (success bool) {
-		debug.PrintStack()
+	t.Run("panic nil", func(t *testing.T) {
+		defer Deferred(func(err error, params ...interface{}) (success bool) {
+			t.Fatal("panic(nil) should not trigger handler")
+			return false
+		})
+		panic(nil)
 
-		return true
-	}
-	defer Deferred(handler)
+	})
+	t.Run("panic error", func(t *testing.T) {
+		var err = errors.New("any")
+		defer Deferred(func(err error, params ...interface{}) (success bool) {
+			debug.PrintStack()
+			return true
+		})
+		PanicError(err)
+	})
+	t.Run("panic string", func(t *testing.T) {
 
-	PanicError(err)
-
+		defer Deferred(func(err error, params ...interface{}) (success bool) {
+			assert.Equal(t, "str", err.Error())
+			return true
+		})
+		panic("str")
+	})
+	t.Run("panic number", func(t *testing.T) {
+		defer Deferred(func(err error, params ...interface{}) (success bool) {
+			t.Fatal("panic(1) should not trigger handler")
+			return false
+		})
+		panic(1)
+	})
 }
 func TestAssert(t *testing.T) {
 	type localType struct {

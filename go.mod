@@ -3,8 +3,8 @@ module github.com/davidkhala/goutils
 go 1.20
 
 require (
-	github.com/spf13/viper v1.18.1
-	google.golang.org/protobuf v1.31.0
+	github.com/spf13/viper v1.18.2
+	google.golang.org/protobuf v1.32.0
 )
 
 require (

@@ -24,6 +24,8 @@ func main() {
 	}, app)
 	app.GET("/ping", restful.Ping)
 	app.GET("/", restful.Ping)
+	app.GET("/context/:key", restful.Context)
+	app.GET("/panic", restful.Panic)
 
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler)) // refers to /swagger/*any
 

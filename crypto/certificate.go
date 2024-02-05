@@ -8,19 +8,19 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	. "github.com/davidkhala/goutils"
+	"github.com/davidkhala/goutils"
 )
 
 func ParseCertPemOrPanic(pemBytes []byte) *x509.Certificate {
 	cert, err := ParseCertPem(pemBytes)
-	PanicError(err)
+	goutils.PanicError(err)
 	return cert
 }
 
 // ParseCertPem used in server app
 func ParseCertPem(pemBytes []byte) (cert *x509.Certificate, err error) {
 	block, rest := pem.Decode(pemBytes)
-	if !IsEmpty[byte](rest) {
+	if !goutils.IsEmpty[byte](rest) {
 		err = errors.New("pem decode failed")
 		return
 	}
