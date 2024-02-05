@@ -32,12 +32,16 @@ func TestPanicError(t *testing.T) {
 		})
 		panic("str")
 	})
-	t.Run("panic number", func(t *testing.T) {
-		defer Deferred(func(err error, params ...interface{}) (success bool) {
-			t.Fatal("panic(1) should not trigger handler")
-			return false
-		})
-		panic(1)
+	t.Run("panic number: will not be handled ", func(t *testing.T) {
+		var panic1 = func() {
+			defer Deferred(func(err error, params ...interface{}) (success bool) {
+				t.Fatal("panic(1) should not trigger handler")
+				return false
+			})
+			panic(1)
+		}
+		assert.PanicsWithValue(t, 1, panic1)
+
 	})
 }
 func TestAssert(t *testing.T) {

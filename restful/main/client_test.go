@@ -5,6 +5,7 @@ import (
 	http2 "github.com/davidkhala/goutils/http"
 	"github.com/kortschak/utter"
 	"github.com/stretchr/testify/assert"
+	"net/http"
 	"testing"
 )
 
@@ -27,8 +28,11 @@ func TestGet(t *testing.T) {
 	})
 	t.Run("panic", func(t *testing.T) {
 		// TODO WIP
-		response := http2.Get("http://localhost:8080/panic", nil)
+		var response = http2.Get("http://localhost:8080/panic", nil)
 		utter.Dump(response.Trim())
+		var trimmed = response.Trim()
+		//assert.Equal(t, trimmed.Body, "error")
+		assert.Equal(t, trimmed.StatusCode, http.StatusInternalServerError)
 	})
 
 }
