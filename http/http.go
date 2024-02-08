@@ -84,9 +84,9 @@ func GetHttpClient(config *tls.Config) *http.Client {
 
 }
 
-// Code A http code
-type Code int
+// StatusCode A http status code
+type StatusCode int
 
-func (c Code) String() string {
+func (c StatusCode) String() string {
 	return http.StatusText(int(c))
 }

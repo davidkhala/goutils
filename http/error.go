@@ -5,7 +5,7 @@ import (
 )
 
 type Error struct {
-	Code    Code
+	Code    StatusCode
 	Message string
 	Data    interface{} `json:"data,omitempty"`
 }

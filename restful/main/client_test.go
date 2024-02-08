@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	http2 "github.com/davidkhala/goutils/http"
-	"github.com/kortschak/utter"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -27,12 +26,21 @@ func TestGet(t *testing.T) {
 		assert.Equal(t, response.Trim().Body, "pong")
 	})
 	t.Run("panic", func(t *testing.T) {
-		// TODO WIP
-		var response = http2.Get("http://localhost:8080/panic", nil)
-		utter.Dump(response.Trim())
+		var errString = "errorMessage"
+		var response = http2.Get("http://localhost:8080/panic/"+errString, nil)
 		var trimmed = response.Trim()
-		//assert.Equal(t, trimmed.Body, "error")
-		assert.Equal(t, trimmed.StatusCode, http.StatusInternalServerError)
+		assert.Equal(t, errString, trimmed.Body)
+		assert.Equal(t, http.StatusInternalServerError, trimmed.StatusCode)
+	})
+	t.Run("context getter", func(t *testing.T) {
+		var response = http2.Get("http://localhost:8080/context/PORT", nil)
+		var trimmed = response.Trim()
+		assert.Equal(t, "8080", trimmed.Body)
+		assert.Equal(t, http.StatusOK, trimmed.StatusCode)
+		response = http2.Get("http://localhost:8080/context/any", nil)
+		trimmed = response.Trim()
+		assert.Equal(t, "any", trimmed.Body)
+		assert.Equal(t, http.StatusNotFound, trimmed.StatusCode)
 	})
 
 }

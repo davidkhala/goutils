@@ -17,6 +17,16 @@ func Ping(c *gin.Context) {
 
 func Context(c *gin.Context) {
 	var key = c.Param("key")
+	value := c.GetString(key)
+
+	if value == "" {
+		c.String(http.StatusNotFound, key)
+	} else {
+		c.String(http.StatusOK, value)
+	}
+}
+func AnyContext(c *gin.Context) {
+	var key = c.Param("key")
 	value, exists := c.Get(key)
 	if exists {
 		c.String(http.StatusOK, string(goutils.ToJson(value)))
@@ -29,7 +39,8 @@ func Panic(c *gin.Context) {
 		c.String(http.StatusInternalServerError, err.Error())
 		return true
 	})
-	panic("error")
+	var errString = c.Param("error")
+	panic(errString)
 }
 
 func App(coloredConsole bool) *gin.Engine {
@@ -44,9 +55,11 @@ func App(coloredConsole bool) *gin.Engine {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	if !coloredConsole {
-		// Disable Console Color
+	if coloredConsole {
+		gin.ForceConsoleColor()
+	} else {
 		gin.DisableConsoleColor()
+
 	}
 
 	r := gin.Default()
