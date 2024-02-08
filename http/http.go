@@ -4,9 +4,8 @@ import (
 	"bytes"
 	"crypto/tls"
 	"crypto/x509"
-	. "github.com/davidkhala/goutils"
+	"github.com/davidkhala/goutils"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -42,8 +41,8 @@ type ResponseJSON struct {
 }
 
 func (t Response) BodyBytes() []byte {
-	content, err := ioutil.ReadAll(t.Body)
-	PanicError(err)
+	content, err := io.ReadAll(t.Body)
+	goutils.PanicError(err)
 	return content
 }
 func (t Response) Trim() ResponseJSON {
@@ -57,14 +56,14 @@ func Get(url string, client *http.Client) Response {
 	} else {
 		resp, err = client.Get(url)
 	}
-	PanicError(err)
+	goutils.PanicError(err)
 	return Response(*resp)
 }
-func PostForm(_url string, data url.Values, client *http.Client) Response {
-	return Post(_url, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()), client)
+func PostForm(url string, data url.Values, client *http.Client) Response {
+	return Post(url, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()), client)
 }
 func PostJson(url string, body interface{}, client *http.Client) Response {
-	return Post(url, "application/json", bytes.NewBuffer(ToJson(body)), client)
+	return Post(url, "application/json", bytes.NewBuffer(goutils.ToJson(body)), client)
 }
 func Post(url string, contentType string, body io.Reader, client *http.Client) Response {
 	var err error
@@ -74,7 +73,7 @@ func Post(url string, contentType string, body io.Reader, client *http.Client) R
 	} else {
 		resp, err = client.Post(url, contentType, body)
 	}
-	PanicError(err)
+	goutils.PanicError(err)
 	return Response(*resp)
 }
 func GetHttpClient(config *tls.Config) *http.Client {
@@ -83,4 +82,11 @@ func GetHttpClient(config *tls.Config) *http.Client {
 	}
 	return &http.Client{Transport: tr}
 
+}
+
+// Code A http code
+type Code int
+
+func (c Code) String() string {
+	return http.StatusText(int(c))
 }

@@ -3,7 +3,7 @@ module github.com/davidkhala/goutils/restful
 go 1.20
 
 require (
-	github.com/davidkhala/goutils v1.6.1
+	github.com/davidkhala/goutils v1.6.2
 	github.com/gin-gonic/gin v1.9.1
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
@@ -12,8 +12,8 @@ require (
 
 // dev dependency
 require (
-	github.com/stretchr/testify v1.8.4
 	github.com/kortschak/utter v1.5.0
+	github.com/stretchr/testify v1.8.4
 
 )
 
@@ -52,7 +52,7 @@ require (
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.7.0 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.32.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

@@ -25,8 +25,8 @@ func Context(c *gin.Context) {
 	}
 }
 func Panic(c *gin.Context) {
-	defer goutils.Deferred(func(errString string, params ...interface{}) (success bool) {
-		c.String(http.StatusInternalServerError, errString)
+	defer goutils.Deferred(func(err error, params ...interface{}) (success bool) {
+		c.String(http.StatusInternalServerError, err.Error())
 		return true
 	})
 	panic("error")
