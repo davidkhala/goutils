@@ -5,9 +5,60 @@
         "contact": {
             "email": "david-khala@hotmail.com"
         },
-        "version": "1.16"
+        "version": "v0.0.1"
     },
     "paths": {
+        "/context/{key}": {
+            "get": {
+                "produces": [
+                    "text/plain"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "context key",
+                        "name": "key",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/panic/{error}": {
+            "get": {
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "the error message to be replied back in response",
+                        "name": "error",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/ping": {
             "get": {
                 "produces": [

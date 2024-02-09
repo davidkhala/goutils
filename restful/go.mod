@@ -11,11 +11,7 @@ require (
 )
 
 // dev dependency
-require (
-	github.com/kortschak/utter v1.5.0
-	github.com/stretchr/testify v1.8.4
-
-)
+require github.com/stretchr/testify v1.8.4
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect

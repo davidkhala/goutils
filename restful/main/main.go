@@ -1,3 +1,4 @@
+//go:generate swag init -g main/main.go -o ../docs -d ../
 package main
 
 import (
@@ -11,7 +12,6 @@ import (
 func main() {
 	app, run := restful.SampleApp(8080)
 
-	app.GET("/", restful.Ping)
 	app.GET("/context/:key", restful.Context)
 	app.GET("/panic/:error", restful.Panic)
 	run()

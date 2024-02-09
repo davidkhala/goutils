@@ -2,7 +2,7 @@ package goutils
 
 import (
 	"errors"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"runtime"
 )
@@ -30,7 +30,7 @@ func ReadFile(file string) ([]byte, error) {
 		return nil, nil
 	}
 
-	in, err := ioutil.ReadFile(file)
+	in, err := os.ReadFile(file)
 	if err != nil {
 		return nil, err
 	}
