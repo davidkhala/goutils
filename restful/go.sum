@@ -15,8 +15,8 @@ github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1VwoXQT9A3Wy9MM3WgvqSxFWenqJduM=
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/davidkhala/goutils v1.6.2 h1:cv45E6dRqxlnU2097Vp60lM8769BHFZXB+cvkru7vb8=
-github.com/davidkhala/goutils v1.6.2/go.mod h1:q/XECZiDY67HvEu8PVKuC2uL2Ycuo9jJTh87J9la1MM=
+github.com/davidkhala/goutils v1.6.3 h1:Q4GGhVUNdUnsbVlcoaV3xeYB8kQlExyapHIN+/IOmwE=
+github.com/davidkhala/goutils v1.6.3/go.mod h1:q/XECZiDY67HvEu8PVKuC2uL2Ycuo9jJTh87J9la1MM=
 github.com/fsnotify/fsnotify v1.7.0 h1:8JEhPFa5W2WU7YfeZzPNqzMP6Lwt7L2715Ggo0nosvA=
 github.com/gabriel-vasile/mimetype v1.4.2 h1:w5qFW6JKBz9Y393Y4q372O9A7cUSequkh1Q7OhCmWKU=
 github.com/gabriel-vasile/mimetype v1.4.2/go.mod h1:zApsH/mKG4w07erKIaJPFiX0Tsq9BFQgN3qGY5GnNgA=
