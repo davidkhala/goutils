@@ -15,12 +15,6 @@ func Ping(c *gin.Context) {
 	c.String(http.StatusOK, "pong")
 }
 
-// Context
-// @Router /context/{key} [get]
-// @Param key	path string true "context key"
-// @Success 200 {string} string
-// @Failure 404 {string} string
-// @Produce text/plain
 func Context(c *gin.Context) {
 	var key = c.Param("key")
 	value := c.GetString(key)
@@ -41,10 +35,6 @@ func AnyContext(c *gin.Context) {
 	}
 }
 
-// Panic
-// @Router /panic/{error} [get]
-// @Param error path string true "the error message to be replied back in response"
-// @Failure 500 {string} string
 func Panic(c *gin.Context) {
 	defer goutils.Deferred(func(err error, params ...interface{}) (success bool) {
 		c.String(http.StatusInternalServerError, err.Error())
