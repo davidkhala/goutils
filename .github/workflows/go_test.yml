@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        extension: [grpc, logger, leveldb, restful]
+        extension: [grpc, logger, leveldb]
     defaults:
       run:
         working-directory: ${{matrix.extension}}
@@ -21,3 +21,17 @@ jobs:
       - uses: actions/checkout@main
       - run: go mod vendor
       - run: go test
+  restful:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: restful
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-go@main
+        with:
+          go-version: '^1.20'
+      - run: go mod vendor
+      - run: go test
+      - run: go install github.com/swaggo/swag/cmd/swag@latest
+      - run: go generate github.com/davidkhala/goutils/restful/main
