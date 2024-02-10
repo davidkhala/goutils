@@ -21,7 +21,11 @@ func ParseCertPemOrPanic(pemBytes []byte) *x509.Certificate {
 func ParseCertPem(pemBytes []byte) (cert *x509.Certificate, err error) {
 	block, rest := pem.Decode(pemBytes)
 	if !goutils.IsEmpty[byte](rest) {
-		err = errors.New("pem decode failed")
+		err = errors.New("pem decode failed: containing rest bytes=" + string(rest))
+		return
+	}
+	if block == nil {
+		err = errors.New("pem decode failed: certificate block not found")
 		return
 	}
 	return x509.ParseCertificate(block.Bytes)

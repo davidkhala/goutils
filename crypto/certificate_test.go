@@ -21,4 +21,9 @@ func TestCertificate(t *testing.T) {
 		var outBytes = ToCertPem(cert)
 		assert.Equal(t, pemBytes, outBytes)
 	})
+	t.Run("empty certificate", func(t *testing.T) {
+		_, err := ParseCertPem([]byte{})
+		assert.Error(t, err)
+
+	})
 }
