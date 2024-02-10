@@ -14,21 +14,21 @@ func (e *Error) Error() string {
 	return "[" + e.Code.String() + "]" + e.Message
 }
 
-func BadRequest(msg string) Error {
-	return Error{
+func BadRequest(msg string) *Error {
+	return &Error{
 		Code:    http.StatusBadRequest,
 		Message: msg,
 	}
 }
 
-func ServiceUnavailable(msg string) Error {
-	return Error{
+func ServiceUnavailable(msg string) *Error {
+	return &Error{
 		Code:    http.StatusServiceUnavailable,
 		Message: msg,
 	}
 }
-func InternalServerError(msg string) Error {
-	return Error{
+func InternalServerError(msg string) *Error {
+	return &Error{
 		Code:    http.StatusInternalServerError,
 		Message: msg,
 	}

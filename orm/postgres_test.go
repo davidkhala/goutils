@@ -1,15 +1,15 @@
-package testdata
+package orm
 
 import (
-	"fmt"
 	"github.com/davidkhala/goutils"
-	"github.com/davidkhala/goutils/orm"
+	"github.com/davidkhala/goutils/orm/testdata"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestConnect(t *testing.T) {
-	var postgres = orm.Postgres{
-		ConnectOptions: orm.ConnectOptions{
+	var postgres = Postgres{
+		ConnectOptions: ConnectOptions{
 			Host:     "localhost",
 			Port:     5432,
 			User:     "postgres",
@@ -21,17 +21,17 @@ func TestConnect(t *testing.T) {
 	goutils.PanicError(err)
 
 	t.Run("use table", func(t *testing.T) {
-		var data = User{
+		var data = testdata.User{
 			Name:  "david",
 			Email: "david-khala@hotmail.com",
 		}
 
-		err := postgres.Init(&User{})
+		err := postgres.Init(&testdata.User{})
 		goutils.PanicError(err)
 		var newCreate = postgres.CreateIfNotExist(&data)
-		fmt.Println(newCreate)
-		fmt.Println(postgres.Count(&User{}))
-		postgres.Truncate(&User{})
+		assert.True(t, newCreate)
+		assert.True(t, postgres.Count(&testdata.User{}) > 0)
+		postgres.Truncate(&testdata.User{})
 
 	})
 }
